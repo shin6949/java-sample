@@ -98,4 +98,58 @@ public abstract class Piece {
 		return min;
 	}
 	
+	public int getMaxY() {
+		int max = r[0];
+		for(int i = 1; i < r.length; i++) {
+			if(r[i] > max) {
+				max = r[i];
+			}
+		}
+		return max;
+	}
+	
+	public boolean moveDown() { //아래로 이동
+		if(center.y + getMaxY() + 1 < TetrisData.ROW) {
+				if(isOverlap(DOWN) != true) {
+					center.y++;
+				} else {
+					return true;
+				}
+			} else { return true; }
+			
+			return false;
+		}
+	
+	public void moveLeft() { //왼쪽으로 이동
+		if(center.x + getMinX() -1 >= 0)
+			if(isOverlap(LEFT) != true) {center.x--;}
+			else return;
+	}
+	
+	public void moveRight() { //오른쪽으로 이동
+		if(center.x + getMaxX() + 1 < TetrisData.COL)
+			if(isOverlap(RIGHT) != true) { center.x++; }
+			else return;
+	}
+	
+	public void rotate() { //조각 회전
+		int rc = roteType();
+		if(rc <= 1) return;
+		
+		if(rc == 2) {
+			rotate4();
+			rotate4();
+			rotate4();
+		} else {
+			rotate4();
+		}
+	}
+	
+	public void rotate4() { //조각 회전
+		for(int i = 0; i < 4; i++) {
+			int temp = c[i];
+			c[i] = -r[i];
+			r[i] = temp;
+		}
+	}
 }
