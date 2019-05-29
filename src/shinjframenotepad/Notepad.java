@@ -94,11 +94,13 @@ public class Notepad extends JFrame implements ActionListener{
 		
 		//저장
 		else if(e.getSource() == mntmSave) {
-			
 			String dfName = FileUtil.showSaveFileChooser(null).getPath();
-			
 			StringBuffer data = new StringBuffer();
 			
+			/* FileUtil의 소스를 이용하면 한글로 적었을 때 줄 바꿈이 되지 않음. 
+			 * 이 문제를 해결하기 위해 ByteArrayInputStream -> InputStream -> BufferedReader로 변환
+			 * 그 후, while로 글제를 불러와서 줄 바꿈 처리.
+			 * 그 후, FileUtil의 save 메소드를 사용하여 저장.*/
 			try {
 				String enter = System.getProperty("line.separator");
 				InputStream is = new ByteArrayInputStream(txtLog.getText().getBytes());
