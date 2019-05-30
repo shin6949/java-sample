@@ -128,7 +128,18 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 				} catch(Exception e){ }
 			}
 		}
-	 
+	
+	public void Boom() {
+		try {
+			interval = 0;
+			Thread.currentThread().sleep(1000);
+			interval = 2000;
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
 	  // 키보드를 이용해서 테트리스 조각 제어
 	public void keyPressed(KeyEvent e) {
 		if(current == null) return;
@@ -145,6 +156,16 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		case 38: // 윗쪽 화살표
 			current.rotate();
 			repaint();
+			break;
+		case 32:
+			try {
+				interval = 0;
+				Thread.currentThread().sleep(1000);
+				interval = 2000;
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			break;
 		case 40: // 아랫쪽 화살표
 			boolean temp = current.moveDown();

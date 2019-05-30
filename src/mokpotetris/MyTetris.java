@@ -61,6 +61,14 @@ public class MyTetris extends JFrame {
 				System.exit(0);
 			}
 		});
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("\uC790\uD3ED");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tetrisCanvas.Boom();
+			}
+		});
+		menu.add(mntmNewMenuItem_2);
 		menu.add(mntmNewMenuItem_1);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
