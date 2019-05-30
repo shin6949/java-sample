@@ -1,4 +1,4 @@
-package mokpotetris;
+ package mokpotetris;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,8 +28,8 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		colors[0] = new Color(80, 80, 80); // 배경색(검은회색)
 		colors[1] = new Color(255, 0, 0); //빨간색
 		colors[2] = new Color(0, 255, 0); //녹색
-		colors[3] = new Color(0, 200, 255); //노란색
-		colors[4] = new Color(255, 255, 0); //하늘색
+		colors[3] = new Color(0, 200, 255); //하늘색
+		colors[4] = new Color(255, 255, 0); //노란색
 		colors[5] = new Color(255, 150, 0); //황토색
 		colors[6] = new Color(210, 0, 240); //보라색
 		colors[7] = new Color(40, 0, 240); //파란색
@@ -77,6 +77,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		int th = w * TetrisData.ROW + margin;
 		return new Dimension(tw, th);
 		}
+	
 	public void run(){
 		while(!stop) {
 			try {
@@ -94,11 +95,14 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 						current = new El(data);
 						break;
 					case 3:
-						//추가로 작성할 내용
+						current = new J(data);
+						break;
 					case 4:
-						// 추가로 작성할 내용
+						current = new O(data);
+						break;
 					case 5:
-						// 추가로 작성할 내용
+						current = new S(data);
+						break;
 					case 6:
 						// 추가로 작성할 내용
 					default:

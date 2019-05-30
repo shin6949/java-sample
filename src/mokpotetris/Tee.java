@@ -10,7 +10,7 @@ public class Tee extends Piece {
 	}
 	
 	public int getType() {
-		return 2;
+		return 6;
 	}
 	
 	public int roteType() {
