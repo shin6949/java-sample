@@ -58,8 +58,8 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			for(int k = 0; k < TetrisData.COL; k++) {
 				if(data.getAt(i, k) == 0) {
 					g.setColor(colors[data.getAt(i, k)]);
-					g.draw3DRect(margin/2 + w * k, margin/2 + w * i, w, w, true); } 
-				else { 
+					g.draw3DRect(margin/2 + w * k, margin/2 + w * i, w, w, true); 
+					} else { 
 					g.setColor(colors[data.getAt(i, k)]);
 					g.fill3DRect(margin/2 + w * k, margin/2 + w * i, w, w, true);
 					}
