@@ -11,7 +11,7 @@ public abstract class Piece {
 	protected TetrisData data; //테트리스 내부 데이터
 	protected Point center; // 조각의 중심 좌표
 	
-	public Piece(TetrisData Data) {
+	public Piece(TetrisData data) {
 		r = new int[4];
 		c = new int[4];
 		this.data = data;
@@ -28,7 +28,7 @@ public abstract class Piece {
 		boolean value = false;
 		int x = getX();
 		int y = getY();
-		if(getMinY() + y <= 0) {
+		if(getMinY() + y <= 0) { // 게임 종료 상황
 			value = true;
 		}
 		
