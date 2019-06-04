@@ -5,9 +5,18 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import java.io.*;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	protected Thread worker;
@@ -181,6 +190,17 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			repaint();
 			}
 		}
+	public void Play(String fileName) {
+		try {
+			AudioInputStream ais = AudioSystem.getAudioInputStream(new File(fileName));
+			Clip clip = AudioSystem.getClip();
+			clip.stop();
+			clip.open(ais);
+			clip.start();
+		}catch(Exception ex) {
+							}
+		
+	}
 	 
 	public void keyReleased(KeyEvent e) { }
 	 public void keyTyped(KeyEvent e) { }
