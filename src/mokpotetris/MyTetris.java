@@ -58,6 +58,7 @@ public class MyTetris extends JFrame {
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("\uC885\uB8CC");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				tetrisCanvas.Stop_Sound();
 				System.exit(0);
 			}
 		});

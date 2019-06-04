@@ -15,6 +15,6 @@ public class S extends Piece {
 	}
 	
 	public int roteType() {
-		return 0;
+		return 2;
 	}
 }
