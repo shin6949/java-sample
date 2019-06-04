@@ -195,7 +195,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			clip.start();
 		}	catch(Exception ex) { }		
 	}
-	
+	//Å×½ºÆ®
 	public static void Stop_Sound() {
 		clip.stop();
 		clip.close();
