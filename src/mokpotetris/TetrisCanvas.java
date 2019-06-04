@@ -187,6 +187,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			repaint();
 			}
 		}
+	//Å×½ºÆ®
 	public static void Play(String fileName) {
 		try {
 			AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(fileName)));

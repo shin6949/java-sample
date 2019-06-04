@@ -30,7 +30,7 @@ public class MyTetris extends JFrame {
 			}
 		});
 	}
-
+//Å×½ºÆ®
 	/**
 	 * Create the frame.
 	 */
