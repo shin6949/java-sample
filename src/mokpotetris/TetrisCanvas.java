@@ -1,4 +1,5 @@
- package mokpotetris;
+//Å×½ºÆ®
+package mokpotetris;
 
 import java.awt.Color;
 import java.awt.Dimension;
