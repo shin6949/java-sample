@@ -1,4 +1,3 @@
-//Å×½ºÆ®
 package mokpotetris;
 
 import java.awt.Color;
