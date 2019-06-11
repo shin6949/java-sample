@@ -101,7 +101,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 						current = new El(data);
 						break;
 					case 3:
-						current = new J(data);
+						current = new Z(data);
 						break;
 					case 4:
 						current = new O(data);
@@ -110,7 +110,8 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 						current = new S(data);
 						break;
 					case 6:
-						// 추가로 작성할 내용
+						current = new J(data);
+						break;
 					default:
 						if(random % 2 == 0)
 							current = new Tee(data);

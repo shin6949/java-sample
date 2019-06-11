@@ -10,7 +10,7 @@ public class El extends Piece {
 	}
 	
 	public int getType() {
-		return 3;
+		return 5;
 	}
 	
 	public int roteType() {
