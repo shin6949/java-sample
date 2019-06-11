@@ -50,7 +50,7 @@ public class MyTetris extends JFrame {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tetrisCanvas.start();
-				//tetrisCanvas.Play("sound/music.wav");
+				tetrisCanvas.Play("sound/music.wav");
 			}
 		});
 		menu.add(mntmNewMenuItem);

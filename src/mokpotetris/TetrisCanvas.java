@@ -52,6 +52,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	}
 	 
 	public void stop() {
+		Stop_Sound();
 		stop = true;
 		current = null;
 	}
@@ -71,6 +72,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 					}
 				}
 			}
+		
 		if(current != null){ // 현재 내려오고 있는 테트리스 조각 그리기
 			for(int i = 0; i < 4; i++) {
 				g.setColor(colors[current.getType()]);
@@ -78,13 +80,14 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 				}
 			}
 		}
+	
 	public Dimension getPreferredSize(){ // 테트리스 판의 크기 지정
 		int tw = w * TetrisData.COL + margin;
 		int th = w * TetrisData.ROW + margin;
 		return new Dimension(tw, th);
-		}
+	}
 	
-	public void run(){
+	public void run() {
 		while(!stop) {
 			try {
 				if(makeNew){ // 새로운 테트리스 조각 만들기
@@ -182,7 +185,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			repaint();
 			}
 		}
-	//테스트
+	
 	public static void Play(String fileName) {
 		try {
 			AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(fileName)));
