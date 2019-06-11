@@ -164,15 +164,9 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			current.rotate();
 			repaint();
 			break;
-		case 32:
-			try {
-				interval = 0;
-				Thread.currentThread().sleep(1000);
-				interval = 2000;
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		case 32: //스페이스바
+			current.moveFullDown();
+			repaint();
 			break;
 		case 40: // 아랫쪽 화살표
 			boolean temp = current.moveDown();

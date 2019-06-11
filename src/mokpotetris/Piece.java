@@ -112,6 +112,10 @@ public abstract class Piece {
 		if(center.y + getMaxY() + 1 < TetrisData.ROW) {
 				if(isOverlap(DOWN) != true) {
 					center.y++;
+					System.out.println("center.x: " + center.x);
+					System.out.println("center.y: " + center.y);
+					System.out.println("Min Y: " + getMinY());
+					System.out.println("Max Y: " + getMaxY() + "\n");
 				} else {
 					return true;
 				}
@@ -119,6 +123,12 @@ public abstract class Piece {
 			
 			return false;
 		}
+	
+	public void moveFullDown() { //하드드롭
+		for(int i = 0; i < 19; i++) {
+			this.moveDown();
+		}
+	}
 	
 	public void moveLeft() { //왼쪽으로 이동
 		if(center.x + getMinX() -1 >= 0)
