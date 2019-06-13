@@ -11,13 +11,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+
 public class MyTetris extends JFrame {
 
 	private JPanel contentPane;
+	public static TetrisCanvas tetrisCanvas = new TetrisCanvas();
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -30,15 +30,12 @@ public class MyTetris extends JFrame {
 			}
 		});
 	}
-//Å×½ºÆ®
-	/**
-	 * Create the frame.
-	 */
+
 	public MyTetris() {
 		setTitle("MokpoTetris");
-		TetrisCanvas tetrisCanvas = new TetrisCanvas();
+		TetrisView tetrisView = new TetrisView();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 381, 628);
+		setBounds(100, 100, 499, 629);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -50,7 +47,7 @@ public class MyTetris extends JFrame {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tetrisCanvas.start();
-				tetrisCanvas.Play("sound/music.wav");
+				//TetrisCanvas.Play("sound/music.wav");
 			}
 		});
 		menu.add(mntmNewMenuItem);
@@ -58,7 +55,6 @@ public class MyTetris extends JFrame {
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("\uC885\uB8CC");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				tetrisCanvas.Stop_Sound();
 				System.exit(0);
 			}
 		});
@@ -69,15 +65,15 @@ public class MyTetris extends JFrame {
 				tetrisCanvas.Boom();
 			}
 		});
+		
 		menu.add(mntmNewMenuItem_2);
 		menu.add(mntmNewMenuItem_1);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.add(tetrisView, BorderLayout.CENTER);
 		
-		
-		contentPane.add(tetrisCanvas, BorderLayout.CENTER);
 	}
-
 }

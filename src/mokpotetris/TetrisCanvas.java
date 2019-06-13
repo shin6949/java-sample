@@ -23,13 +23,15 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	protected int margin = 20;
 	protected boolean stop, makeNew;
 	protected Piece current;
-	protected int interval = 2000;
-	protected int level = 2;
+	protected static int interval = 2000;
+	protected static int level = 2;
 	 
 	public TetrisCanvas() {
+		setSize(getPreferredSize());
 		data = new TetrisData();
 	 
 		addKeyListener(this);
+		
 		colors = new Color[8]; // 테트리스 배경 및 조각 색
 		colors[0] = new Color(80, 80, 80); // 배경색(검은회색)
 		colors[1] = new Color(255, 0, 0); //빨간색
@@ -51,8 +53,8 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		repaint();
 	}
 	 
-	public void stop() {
-		Stop_Sound();
+	public void stop() { //게임 끝나면 음악 재생 중단
+		//Stop_Sound();
 		stop = true;
 		current = null;
 	}
@@ -88,12 +90,16 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	}
 	
 	public void run() {
+		int block_stack[] = {(int)(Math.random() * Integer.MAX_VALUE) % 7, (int)(Math.random() * Integer.MAX_VALUE) % 7, (int)(Math.random() * Integer.MAX_VALUE) % 7}; //한번만 작동하는 코드임.
+		
 		while(!stop) {
+			int now_score = data.getLine() * 175 * level;
+			TetrisView.refresh_now_score(now_score);
+			
 			try {
 				if(makeNew){ // 새로운 테트리스 조각 만들기
-					int random = (int)(Math.random() * Integer.MAX_VALUE) % 7;
-	 
-					switch(random){
+			
+					switch(block_stack[0]){
 					case 0:
 						current = new Bar(data);
 						break;
@@ -116,36 +122,49 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 						current = new J(data);
 						break;
 					default:
-						if(random % 2 == 0)
+						if(block_stack[0] % 2 == 0)
 							current = new Tee(data);
 						else current = new El(data);
 					}
+					
+					for(int i = 0; i < 3; i++) {
+						int tmp[] = {block_stack[1], block_stack[2]};
+						block_stack[0] = tmp[0];
+						block_stack[1] = tmp[1];
+						block_stack[2] = (int)(Math.random() * Integer.MAX_VALUE) % 7;
+					}
+					
+					TetrisPreview.input_next_blocks(block_stack[1], block_stack[2]);
 					makeNew = false;
+					
 				} else { // 현재 만들어진 테트리스 조각 아래로 이동
 					if(current.moveDown()){
+				
 						makeNew = true;
+						
 						if(current.copy()){
 							stop();
 							int score = data.getLine() * 175 * level;
-							JOptionPane.showMessageDialog(this, "게임끝\n점수 : " + score);
+							JOptionPane.showMessageDialog(this, "게임 끝\n점수 : " + score);
 						}
 						current = null;
 					}
 					data.removeLines();
 				}
 				repaint();
-				Thread.currentThread().sleep(interval/level);
+				Thread.currentThread();
+				Thread.sleep(interval/level);
 				} catch(Exception e){ }
 			}
 		}
 	
-	public void Boom() {
+	public static void Boom() {
 		try {
 			interval = 0;
-			Thread.currentThread().sleep(1000);
+			Thread.currentThread();
+			Thread.sleep(1000);
 			interval = 2000;
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -173,9 +192,9 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			break;
 		case 40: // 아랫쪽 화살표
 			boolean temp = current.moveDown();
-			if(temp){
+			if(temp) {
 				makeNew = true;
-				if(current.copy()){
+				if(current.copy()) {
 					stop();
 					int score = data.getLine() * 175 * level;
 					JOptionPane.showMessageDialog(this, "게임 끝\n점수 : " + score);
@@ -199,7 +218,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		clip.stop();
 		clip.close();
 	}
-	 
+	
 	public void keyReleased(KeyEvent e) { }
 	 public void keyTyped(KeyEvent e) { }
 }
