@@ -73,5 +73,4 @@ public class TetrisView extends JPanel {
 	public static void refresh_now_score(int score) {
 		nowScore.setText("\uD604\uC7AC \uC810\uC218: " + score);
 	}
-	
 }
