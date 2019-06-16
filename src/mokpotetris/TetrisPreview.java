@@ -10,7 +10,7 @@ public class TetrisPreview extends JPanel {
 	protected TetrisData data; //테트리스 내부 데이터
 	protected Piece current;
 	protected Color colors[];
-	static int block[] = new int[2];
+	static int block[] = {1,2};
 	
 	public TetrisPreview() {
 		
@@ -23,6 +23,17 @@ public class TetrisPreview extends JPanel {
 		colors[5] = new Color(255, 150, 0); //황토색
 		colors[6] = new Color(210, 0, 240); //보라색
 		colors[7] = new Color(40, 0, 240); //파란색
+		
+		System.out.println("TetrisPreView");
+		repaint();
+	} 
+	
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		System.out.println("TetrisPreView.paint");
+		System.out.println(block[0]);
+		System.out.println(current);
 		
 		switch(block[0]){
 		case 0:
@@ -52,21 +63,14 @@ public class TetrisPreview extends JPanel {
 			else current = new El(data);
 		}
 		
-		repaint();
-	} 
-	
-	public void paint(Graphics g) {
-		super.paint(g);
-		System.out.println(block[0]);
-		
-		if(current != null){
-			for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < 4; i++) {
+			System.out.println("for" + i);
+			System.out.println("color: " + colors[current.getType()]);
 				g.setColor(colors[current.getType()]);
-				//g.fill3DRect(10, , width, height, raised);
-				g.fill3DRect(10 + 25 * 4, 10 + 25 * 4, 25, 25, true);
+				System.out.println("g.fill3DRect( " + 20/2+ "+ 25 *" + (current.getX()+current.c[i]) + ", "  + 20/2 + " + 25 *" + (current.getY()+current.r[i]) + ", ");
+				g.fill3DRect(20/2 + 25 * (current.getX()+current.c[i]), 20/2 + 25 * (current.getY()+current.r[i]), 25, 25, true);
 				}
 			}
-		}
 		
 		public static void input_next_blocks(int next1, int next2) {
 			block[0] = next1;

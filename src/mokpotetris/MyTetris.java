@@ -32,10 +32,10 @@ public class MyTetris extends JFrame {
 	}
 
 	public MyTetris() {
-		setTitle("MokpoTetris");
+		setTitle("Tetris");
 		TetrisView tetrisView = new TetrisView();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 499, 629);
+		setBounds(100, 100, 560, 629);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

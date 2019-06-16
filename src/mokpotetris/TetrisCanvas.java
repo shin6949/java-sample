@@ -236,6 +236,16 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		clip.close();
 	}
 	
+	public static void Level_UP() {
+		level++;
+		TetrisView.refresh_now_level(level);
+	}
+	
+	public static void Level_DOWN() {
+		level--;
+		TetrisView.refresh_now_level(level);
+	}
+	
 	public void keyReleased(KeyEvent e) { }
 	 public void keyTyped(KeyEvent e) { }
 }

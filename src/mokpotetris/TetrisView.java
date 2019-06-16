@@ -12,11 +12,15 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.Box;
 import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TetrisView extends JPanel {
 	public static TetrisHoldview tetrisHold = new TetrisHoldview(); 
 	public static TetrisPreview tetrisPre = new TetrisPreview(); 
-	public static JTextPane nowScore = new JTextPane();
+	static JTextPane nowScore = new JTextPane();
+	static JTextPane nowlevel = new JTextPane();
 	
 	public TetrisView() {
 		setLayout(new BorderLayout(0, 0));
@@ -57,14 +61,14 @@ public class TetrisView extends JPanel {
 			nowScore.setEnabled(false);
 			nowScore.setEditable(false);
 			
-				JTextPane nowlevel = new JTextPane();
+				
 				verticalBox.add(nowlevel);
 				nowlevel.setEditable(false);
 				nowlevel.setDisabledTextColor(SystemColor.desktop);
 				nowlevel.setBackground(new Color(240, 240, 240));
 				nowlevel.setText("현재 레벨: " + TetrisCanvas.level); //현재 레벨 표시
 				nowlevel.setEnabled(false);
-		
+				
 		JPanel holdView = new JPanel();
 		add(holdView, BorderLayout.WEST);
 		holdView.add(tetrisHold);
@@ -72,5 +76,9 @@ public class TetrisView extends JPanel {
 
 	public static void refresh_now_score(int score) {
 		nowScore.setText("\uD604\uC7AC \uC810\uC218: " + score);
+	}
+	
+	public static void refresh_now_level(int level) {
+		nowlevel.setText("현재 레벨: " + level);
 	}
 }
