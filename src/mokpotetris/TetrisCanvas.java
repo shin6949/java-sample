@@ -19,7 +19,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	protected Thread worker;
 	protected Color colors[];
 	protected int w = 25;
-	protected TetrisData data;
+	protected static TetrisData data;
 	protected int margin = 20;
 	protected boolean stop, makeNew;
 	protected Piece current;
@@ -65,7 +65,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		super.paint(g);
 	 
 		for(int i = 0; i < TetrisData.ROW; i++) { //쌓인 조각들 그리기
-		  
+
 			for(int k = 0; k < TetrisData.COL; k++) {
 				if(data.getAt(i, k) == 0) {
 					g.setColor(colors[0]);
@@ -97,7 +97,8 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		while(!stop) {
 			int now_score = data.getLine() * 175 * level;
 			TetrisView.refresh_now_score(now_score);
-			
+			TetrisView.refresh_delete_line(data.getLine());
+						
 			try {
 				if(makeNew){ // 새로운 테트리스 조각 만들기
 					if(block_stack[0] == 8 && block_stack[1] == 8 && block_stack[2] == 8) {

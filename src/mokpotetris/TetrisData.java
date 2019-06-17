@@ -32,24 +32,20 @@ public class TetrisData {
 			for(int k = 0; k < COL; k++) {
 				if(data[i][k] == 0) {
 					done = false;
-					continue NEXT;
-				}
-			}
+					continue NEXT; } }
+			
 			if(done) {
 				line++;
 				for(int x = i; x > 0; x--) {
 					for(int y = 0; y < COL; y++) {
-						data[x][y] = data[x-1][y];
-					}
-				}
+						data[x][y] = data[x-1][y]; } }
 				
 				if(i != 0) {
 					for(int y = 0; y < COL; y++) {
-						data[0][y] = 0;
-					}
-				}
+						data[0][y] = 0; } }
 			}
 		}
+
 	}
 	
 	public void clear() { //data 배열 초기화

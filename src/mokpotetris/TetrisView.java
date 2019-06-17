@@ -22,6 +22,7 @@ public class TetrisView extends JPanel {
 	public static TetrisPreview tetrisPre = new TetrisPreview(); 
 	static JTextPane nowScore = new JTextPane();
 	static JTextPane nowlevel = new JTextPane();
+	static JTextPane deleteline = new JTextPane();
 	
 	public TetrisView() {
 		setLayout(new BorderLayout(0, 0));
@@ -57,7 +58,7 @@ public class TetrisView extends JPanel {
 			
 			verticalBox.add(nowScore);
 			
-			nowScore.setText("\uD604\uC7AC \uC810\uC218: ");
+			nowScore.setText("\uD604\uC7AC \uC810\uC218: 0");
 			nowScore.setDisabledTextColor(SystemColor.desktop);
 			nowScore.setBackground(new Color(240, 240, 240));
 			nowScore.setEnabled(false);
@@ -70,6 +71,14 @@ public class TetrisView extends JPanel {
 				nowlevel.setBackground(new Color(240, 240, 240));
 				nowlevel.setText("현재 레벨: " + TetrisCanvas.level); //현재 레벨 표시
 				nowlevel.setEnabled(false);
+				
+
+				deleteline.setText("\uC0AD\uC81C\uD55C \uC904 \uC218: 0");
+				deleteline.setEnabled(false);
+				deleteline.setEditable(false);
+				deleteline.setDisabledTextColor(Color.BLACK);
+				deleteline.setBackground(SystemColor.menu);
+				verticalBox.add(deleteline);
 				
 		/* JPanel sideView = new JPanel();
 		add(sideView, BorderLayout.WEST);
@@ -93,5 +102,9 @@ public class TetrisView extends JPanel {
 	
 	public static void refresh_now_level(int level) {
 		nowlevel.setText("현재 레벨: " + level);
+	}
+	
+	public static void refresh_delete_line(int line) {
+		deleteline.setText("삭제한 줄 수: " + line);
 	}
 }
