@@ -25,7 +25,8 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	protected Piece current;
 	protected static int interval = 2000;
 	protected static int level = 2;
-	protected static int block_stack[] = {8,8,8}; //한번만 작동하는 코드임. 
+	protected static int block_stack[] = {8,8,8};
+	protected static int now_block = 8;
 	
 	public TetrisCanvas() {
 		setSize(getPreferredSize());
@@ -105,6 +106,8 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 						block_stack[2] = (int)(Math.random() * Integer.MAX_VALUE) % 7;
 					}
 					TetrisPreview.input_next_blocks(block_stack[1], block_stack[2]);
+					now_block = block_stack[0];
+					
 					
 					switch(block_stack[0]){
 					case 0:
@@ -193,6 +196,10 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			current.rotate();
 			repaint();
 			break;
+		case 82: // r키
+	         Hold_block();
+	         repaint();
+	         break;
 		case 32: //스페이스바
 			current.moveFullDown();
 			boolean temp = current.moveDown();
@@ -245,13 +252,30 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	}
 	
 	public static void Level_UP() {
+		if(level <= 50) { 
 		level++;
 		TetrisView.refresh_now_level(level);
+		}
 	}
 	
 	public static void Level_DOWN() {
+		if(level > 1) { 
 		level--;
-		TetrisView.refresh_now_level(level);
+		TetrisView.refresh_now_level(level); }
+	}
+	
+	public void Hold_block() {
+		if(TetrisHoldview.holding_num == 8) { 
+			TetrisHoldview.input_hold_num(now_block);
+			int tmp[] = {block_stack[0], block_stack[1], block_stack[2]};
+			for(int i = 0; i < 3; i++) {
+				block_stack[0] = tmp[1];
+				block_stack[1] = tmp[2];
+				block_stack[2] = (int)(Math.random() * Integer.MAX_VALUE) % 7;
+			}
+		} else {
+			
+		}
 	}
 	
 	public void keyReleased(KeyEvent e) { }

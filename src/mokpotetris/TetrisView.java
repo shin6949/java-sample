@@ -81,6 +81,9 @@ public class TetrisView extends JPanel {
 		
 		JPanel tetrisHold = new JPanel();
 		verticalBox_1.add(tetrisHold);
+		
+		TetrisHoldview tetrisHoldview = new TetrisHoldview();
+		tetrisHold.add(tetrisHoldview);
 	}
 
 	public static void refresh_now_score(int score) {
