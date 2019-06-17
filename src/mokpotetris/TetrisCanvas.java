@@ -55,7 +55,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	}
 	 
 	public void stop() { //게임 끝나면 음악 재생 중단
-		//Stop_Sound();
+		Stop_Sound();
 		stop = true;
 		current = null;
 	}
