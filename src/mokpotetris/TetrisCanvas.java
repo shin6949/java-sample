@@ -19,8 +19,8 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	protected Thread worker;
 	protected Color colors[];
 	protected int w = 25;
-	protected TetrisData data;
 	protected int margin = 20;
+	protected TetrisData data;
 	protected boolean stop, makeNew;
 	protected Piece current;
 	protected static int interval = 2000;
@@ -55,7 +55,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	}
 	 
 	public void stop() { //게임 끝나면 음악 재생 중단
-		Stop_Sound();
+		//Stop_Sound();
 		stop = true;
 		current = null;
 	}
@@ -147,7 +147,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 					if(current.moveDown()){
 						
 						makeNew = true;
-						
+											
 						if(current.copy()){
 							stop();
 							int score = data.getLine() * 175 * level;
@@ -191,6 +191,14 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			break;
 		case 38: // 윗쪽 화살표
 			current.rotate();
+			repaint();
+			break;
+		case 107: // +키
+			Level_UP();
+			repaint();
+			break;
+		case 109: // -키
+			Level_DOWN();
 			repaint();
 			break;
 		case 32: //스페이스바

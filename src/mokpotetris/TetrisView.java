@@ -1,24 +1,21 @@
 package mokpotetris;
 
-import javax.swing.JPanel;
-import javax.swing.JTextPane;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.SystemColor;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JTextField;
-import javax.swing.Box;
+import java.awt.Cursor;
 import java.awt.Font;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+
+import javax.swing.Box;
+import javax.swing.JPanel;
+import javax.swing.JTextPane;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+import java.awt.Component;
 
 public class TetrisView extends JPanel {
-	public static TetrisHoldview tetrisHold = new TetrisHoldview(); 
-	public static TetrisPreview tetrisPre = new TetrisPreview(); 
+	public static TetrisSideview tetrisSide = new TetrisSideview(); 
 	static JTextPane nowScore = new JTextPane();
 	static JTextPane nowlevel = new JTextPane();
 	
@@ -41,6 +38,7 @@ public class TetrisView extends JPanel {
 			panel.add(verticalBox, BorderLayout.NORTH);
 			
 			JTextPane txtpnTesxt = new JTextPane();
+			txtpnTesxt.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			txtpnTesxt.setEnabled(false);
 			txtpnTesxt.setEditable(false);
 			txtpnTesxt.setFont(new Font("나눔바른고딕", Font.PLAIN, 25));
@@ -48,10 +46,16 @@ public class TetrisView extends JPanel {
 			txtpnTesxt.setText("NEXT");
 			txtpnTesxt.setDisabledTextColor(SystemColor.desktop);
 			txtpnTesxt.setBackground(new Color(240, 240, 240));
+			StyledDocument doc = txtpnTesxt.getStyledDocument();
+			SimpleAttributeSet center = new SimpleAttributeSet();
+			StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+			doc.setParagraphAttributes(0, doc.getLength(), center, false);
 			
 			JPanel preview = new JPanel();
 			verticalBox.add(preview);
-			preview.add(tetrisPre);
+			
+			TetrisPreview tetrisPreview = new TetrisPreview();
+			preview.add(tetrisPreview);
 			
 			verticalBox.add(nowScore);
 			
@@ -60,18 +64,23 @@ public class TetrisView extends JPanel {
 			nowScore.setBackground(new Color(240, 240, 240));
 			nowScore.setEnabled(false);
 			nowScore.setEditable(false);
-			
 				
-				verticalBox.add(nowlevel);
-				nowlevel.setEditable(false);
-				nowlevel.setDisabledTextColor(SystemColor.desktop);
-				nowlevel.setBackground(new Color(240, 240, 240));
-				nowlevel.setText("현재 레벨: " + TetrisCanvas.level); //현재 레벨 표시
-				nowlevel.setEnabled(false);
+			verticalBox.add(nowlevel);
+			nowlevel.setEditable(false);
+			nowlevel.setDisabledTextColor(SystemColor.desktop);
+			nowlevel.setBackground(new Color(240, 240, 240));
+			nowlevel.setText("현재 레벨: " + TetrisCanvas.level); //현재 레벨 표시
+			nowlevel.setEnabled(false);
 				
 		JPanel holdView = new JPanel();
 		add(holdView, BorderLayout.WEST);
-		holdView.add(tetrisHold);
+		
+		Box verticalBox_1 = Box.createVerticalBox();
+		holdView.add(verticalBox_1);
+		verticalBox_1.add(tetrisSide);
+		
+		JPanel panel_1 = new JPanel();
+		verticalBox_1.add(panel_1);
 	}
 
 	public static void refresh_now_score(int score) {

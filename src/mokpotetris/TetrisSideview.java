@@ -8,9 +8,9 @@ import java.awt.SystemColor;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
-public class TetrisHoldview extends JPanel {
+public class TetrisSideview extends JPanel {
 	
-	public TetrisHoldview() {
+	public TetrisSideview() {
 		JTextPane txtNext = new JTextPane();
 		txtNext.setFont(new Font("³ª´®¹Ù¸¥°íµñ", Font.PLAIN, 25));
 		txtNext.setText("HOLD");
