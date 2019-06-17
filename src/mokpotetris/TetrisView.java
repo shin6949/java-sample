@@ -70,7 +70,8 @@ public class TetrisView extends JPanel {
 				nowlevel.setBackground(new Color(240, 240, 240));
 				nowlevel.setText("현재 레벨: " + TetrisCanvas.level); //현재 레벨 표시
 				nowlevel.setEnabled(false);
-		JPanel sideView = new JPanel();
+				
+		/* JPanel sideView = new JPanel();
 		add(sideView, BorderLayout.WEST);
 		
 		Box verticalBox_1 = Box.createVerticalBox();
@@ -83,7 +84,7 @@ public class TetrisView extends JPanel {
 		verticalBox_1.add(tetrisHold);
 		
 		TetrisHoldview tetrisHoldview = new TetrisHoldview();
-		tetrisHold.add(tetrisHoldview);
+		tetrisHold.add(tetrisHoldview); */
 	}
 
 	public static void refresh_now_score(int score) {
