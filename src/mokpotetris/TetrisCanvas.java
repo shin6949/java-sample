@@ -207,6 +207,14 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			data.removeLines();
 			repaint();
 			break;
+		case 107: // +키
+			Level_UP();
+			repaint();
+			break;
+		case 109: // -키
+			Level_DOWN();
+			repaint();
+			break;
 		case 40: // 아랫쪽 화살표
 			boolean temp2 = current.moveDown();
 			if(temp2) {

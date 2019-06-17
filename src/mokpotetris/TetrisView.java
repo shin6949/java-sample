@@ -18,7 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 
 public class TetrisView extends JPanel {
-	public static TetrisHoldview tetrisHold = new TetrisHoldview(); 
+	
 	public static TetrisPreview tetrisPre = new TetrisPreview(); 
 	static JTextPane nowScore = new JTextPane();
 	static JTextPane nowlevel = new JTextPane();
@@ -70,10 +70,17 @@ public class TetrisView extends JPanel {
 				nowlevel.setBackground(new Color(240, 240, 240));
 				nowlevel.setText("현재 레벨: " + TetrisCanvas.level); //현재 레벨 표시
 				nowlevel.setEnabled(false);
-				
-		JPanel holdView = new JPanel();
-		add(holdView, BorderLayout.WEST);
-		holdView.add(tetrisHold);
+		JPanel sideView = new JPanel();
+		add(sideView, BorderLayout.WEST);
+		
+		Box verticalBox_1 = Box.createVerticalBox();
+		sideView.add(verticalBox_1);
+		
+		TetrisSideview tetrisSide = new TetrisSideview(); 
+		verticalBox_1.add(tetrisSide);
+		
+		JPanel tetrisHold = new JPanel();
+		verticalBox_1.add(tetrisHold);
 	}
 
 	public static void refresh_now_score(int score) {
