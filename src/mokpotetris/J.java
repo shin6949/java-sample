@@ -18,4 +18,3 @@ public class J extends Piece {
 		return 2;
 	}
 }
-

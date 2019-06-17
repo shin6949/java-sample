@@ -33,7 +33,6 @@ public class TetrisPreview extends JPanel {
 		colors[6] = new Color(210, 0, 240); //보라색
 		colors[7] = new Color(40, 0, 240); //파란색
 		
-		System.out.println("TetrisPreView");
 		repaint();
 	} 
 	
@@ -41,10 +40,7 @@ public class TetrisPreview extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		System.out.println("TetrisPreView.paint");
-		System.out.println(block[0]);
-		System.out.println(current);
-		
+	
 		switch(block[0]){
 		case 0:
 			current = new Bar(data);
@@ -72,10 +68,45 @@ public class TetrisPreview extends JPanel {
 				current = new Tee(data);
 			else current = new El(data);
 		}
-		if(block[1] != 8) {
+		
+		if(block[0] != 8) {
 		for(int i = 0; i < 4; i++) {
 			g.setColor(colors[current.getType()]);
 			g.fill3DRect(margin/2 + w * (1+current.c[i]), margin/2 + w * (current.getY()+current.r[i]), w, w, true);
+			repaint();
+			}
+		}
+		
+		switch(block[1]){
+		case 0:
+			current = new Bar(data);
+			break;
+		case 1:
+			current = new Tee(data);
+			break;
+		case 2:
+			current = new El(data);
+			break;
+		case 3:
+			current = new Z(data);
+			break;
+		case 4:
+			current = new O(data);
+			break;
+		case 5:
+			current = new S(data);
+			break;
+		case 6:
+			current = new J(data);
+			break;
+		default:
+			if(block[1] % 2 == 0)
+				current = new Tee(data);
+			else current = new El(data);
+		}
+		
+		if(block[1] != 8) {
+		for(int i = 0; i < 4; i++) {
 			g.setColor(colors[current.getType()]);
 			g.fill3DRect(margin/2 + w * (1+current.c[i]), margin/2 + w * (3+current.r[i]), w, w, true);
 			repaint();
