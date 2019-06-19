@@ -156,10 +156,12 @@ public abstract class Piece {
 	}
 	
 	public void rotate4() { //조각 회전
+		if(center.x != 9 && center.x != 0) {
 		for(int i = 0; i < 4; i++) {
 			int temp = c[i];
 			c[i] = -r[i];
 			r[i] = temp;
+			}
 		}
 	}
 }
