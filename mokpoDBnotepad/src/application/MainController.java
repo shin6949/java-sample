@@ -11,7 +11,9 @@ import java.io.OutputStreamWriter;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -20,11 +22,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class MainController {
 	
+	private Login loginscene;
 	public static String enter = System.getProperty("line.separator");
 	
 	@FXML private MenuItem menuItem_save;
@@ -34,14 +37,16 @@ public class MainController {
 	@FXML private MenuItem menuItem_cut;
 	@FXML private MenuItem menuItem_copy;
 	@FXML private MenuItem menuItem_paste;
+	@FXML private MenuItem menuItem_login;
 	
-	@FXML private TextArea input_text;
+	@FXML public TextArea input_text;
 	
 	@FXML private Button toolBar_save;
 	@FXML private Button toolBar_new;
 	@FXML private Button toolBar_load;
 	@FXML private Button toolBar_copy;
 	@FXML private Button toolBar_paste;
+	@FXML private Button btn_Test;
 	
 	public void btn_save(ActionEvent event) {
 		String text = input_text.getText();
@@ -121,26 +126,38 @@ public class MainController {
 		alert.getButtonTypes().setAll(buttonTypeSave, buttonTypedontSave, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
+		
 		if (result.get() == buttonTypeSave){
-			saveFile(null);
+			btn_save(null);
 			System.exit(0);
-		} else if (result.get() == buttonTypedontSave) {
-			System.exit(0);
-		} else if (result.get() == buttonTypeCancel) { }
-		} else {
-			
-		}		
+		} else if (result.get() == buttonTypedontSave) { System.exit(0);} 
+		else if (result.get() == buttonTypeCancel) { } } 
+		else { System.exit(0); }		
 	}
 	
-	public void btn_cut (ActionEvent event) {
-		input_text.cut();
+	public void btn_cut (ActionEvent event) { input_text.cut(); }
+	public void btn_copy (ActionEvent event) { input_text.copy(); }
+	public void btn_paste (ActionEvent event) { input_text.paste(); }
+	
+	public void btn_login(ActionEvent event) throws Exception { 
+		Stage primStage = (Stage) input_text.getScene().getWindow();
+		loginscene = new Login();
+		System.out.println("Login Pressed\n"); 
+		loginscene.start(primStage);
 	}
 	
-	public void btn_copy (ActionEvent event) {
-		input_text.copy();
+	public void change_title(ActionEvent event) {
+		 Stage primStage = (Stage) input_text.getScene().getWindow();
+		 primStage.setTitle(input_text.getText());
 	}
 	
-	public void btn_paste (ActionEvent event) {
-		input_text.paste();
+	public void set_exit_action() {
+		Stage primStage = (Stage) input_text.getScene().getWindow();
+		primStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		    @Override
+		    public void handle(WindowEvent event) {
+		    	exit(null);
+		    }
+		}); 	
 	}
 }

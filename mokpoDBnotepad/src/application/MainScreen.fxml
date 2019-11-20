@@ -12,8 +12,9 @@
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Text?>
 
-<FlowPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="451.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
       <BorderPane prefHeight="448.0" prefWidth="401.0">
          <center>
@@ -65,7 +66,7 @@
                       </Menu>
                         <Menu mnemonicParsing="false" text="클라우드">
                            <items>
-                              <MenuItem fx:id="menuItem_login" mnemonicParsing="false" text="로그인" />
+                              <MenuItem fx:id="menuItem_login" mnemonicParsing="false" onAction="#btn_login" text="로그인" />
                               <MenuItem fx:id="menuItem_logout" mnemonicParsing="false" text="로그아웃" visible="false" />
                               <MenuItem fx:id="menuItem_upload" mnemonicParsing="false" text="업로드" visible="false" />
                               <MenuItem fx:id="menuItem_manage" mnemonicParsing="false" text="관리" visible="false" />
@@ -113,11 +114,15 @@
                                  </image>
                               </ImageView>
                            </graphic> </Button>
+                        <Button fx:id="btn_Test" mnemonicParsing="false" onAction="#change_title" text="Button" />
                     </items>
                   </ToolBar>
                </center>
             </BorderPane>
          </top>
+         <bottom>
+            <Text fx:id="txt_status" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="396.12109375" BorderPane.alignment="CENTER_LEFT" />
+         </bottom>
       </BorderPane>
    </children>
 </FlowPane>
