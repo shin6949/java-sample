@@ -16,7 +16,8 @@ public class LoginController {
 	@FXML private Button btn_login;
 	@FXML private TextField input_id;
 	@FXML private PasswordField input_password;
-	
+	@FXML private ProgressBar progressbar = new ProgressBar(0);
+
 	public Account login() {
 		Account logined_account = new Account();
 		String input_id_string = input_id.getText();
@@ -35,10 +36,6 @@ public class LoginController {
 			conn.close();
 			rs.close();
 
-		} catch (Exception e1) { 
-			e1.printStackTrace(); 
-			}
-		
 		if(logined_account.logined_id.equals(input_id_string)) { 
 			logined_account.Logined = true;  } 
 		else { 
@@ -48,9 +45,11 @@ public class LoginController {
 			alert.setTitle("경고");
 			alert.setHeaderText("일치하는 ID가 없습니다.");
 			alert.setContentText("ID와 비밀번호를 확인하고 다시 시도해주세요.");
-
-			alert.showAndWait();
-			}
+	
+	   stmt.close();
+	   conn.close();
+	   rs.close();
+		}
 		
 		return null;
 	}
