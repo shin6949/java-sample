@@ -67,6 +67,7 @@
                         <Menu mnemonicParsing="false" text="클라우드">
                            <items>
                               <MenuItem fx:id="menuItem_login" mnemonicParsing="false" onAction="#btn_login" text="로그인" />
+                              <MenuItem fx:id="menuItem_register" mnemonicParsing="false" onAction="#btn_register" text="회원가입" />
                               <MenuItem fx:id="menuItem_logout" mnemonicParsing="false" text="로그아웃" visible="false" />
                               <MenuItem fx:id="menuItem_upload" mnemonicParsing="false" text="업로드" visible="false" />
                               <MenuItem fx:id="menuItem_manage" mnemonicParsing="false" text="관리" visible="false" />

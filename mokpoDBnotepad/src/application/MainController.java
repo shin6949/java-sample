@@ -13,7 +13,6 @@ import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -26,8 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class MainController {
-	
-	private Login loginscene;
+
 	public static String enter = System.getProperty("line.separator");
 	
 	@FXML private MenuItem menuItem_save;
@@ -38,6 +36,7 @@ public class MainController {
 	@FXML private MenuItem menuItem_copy;
 	@FXML private MenuItem menuItem_paste;
 	@FXML private MenuItem menuItem_login;
+	@FXML private MenuItem menuItem_register;
 	
 	@FXML public TextArea input_text;
 	
@@ -140,9 +139,9 @@ public class MainController {
 	public void btn_paste (ActionEvent event) { input_text.paste(); }
 	
 	public void btn_login(ActionEvent event) throws Exception { 
+		Login loginscene;
 		Stage primStage = (Stage) input_text.getScene().getWindow();
 		loginscene = new Login();
-		System.out.println("Login Pressed\n"); 
 		loginscene.start(primStage);
 	}
 	
@@ -159,5 +158,12 @@ public class MainController {
 		    	exit(null);
 		    }
 		}); 	
+	}
+	
+	public void btn_register(ActionEvent event) {
+		/*private Login loginscene;
+		Stage primStage = (Stage) input_text.getScene().getWindow();
+		loginscene = new Login();
+		loginscene.start(primStage); */
 	}
 }
