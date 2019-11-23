@@ -13,6 +13,8 @@ import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -20,7 +22,10 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -32,11 +37,16 @@ public class MainController {
 	@FXML private MenuItem menuItem_open;
 	@FXML private MenuItem menuItem_new;
 	@FXML private MenuItem menuItem_exit;
+	
 	@FXML private MenuItem menuItem_cut;
 	@FXML private MenuItem menuItem_copy;
 	@FXML private MenuItem menuItem_paste;
+	
 	@FXML private MenuItem menuItem_login;
 	@FXML private MenuItem menuItem_register;
+	@FXML private MenuItem menuItem_logout;
+	@FXML private MenuItem menuItem_upload;
+	@FXML private MenuItem menuItem_manage;
 	
 	@FXML public TextArea input_text;
 	
@@ -46,6 +56,12 @@ public class MainController {
 	@FXML private Button toolBar_copy;
 	@FXML private Button toolBar_paste;
 	@FXML private Button btn_Test;
+	
+	@FXML private Text txt_status;
+	
+	public static String logined_id;
+	public static String logined_name;
+	public static Boolean Logined = false;
 	
 	public void btn_save(ActionEvent event) {
 		String text = input_text.getText();
@@ -139,11 +155,54 @@ public class MainController {
 	public void btn_paste (ActionEvent event) { input_text.paste(); }
 	
 	public void btn_login(ActionEvent event) throws Exception { 
-		Login loginscene;
-		Stage primStage = (Stage) input_text.getScene().getWindow();
-		loginscene = new Login();
-		loginscene.start(primStage);
+		Boolean logined = show_login_screen();
+		if(logined) {
+			txt_status.setText(logined_id + "님 환영합니다.");
+			menuItem_login.setVisible(false);
+			menuItem_register.setVisible(false);
+			menuItem_logout.setVisible(true);
+			menuItem_upload.setVisible(true);
+			menuItem_manage.setVisible(true);
+		}
 	}
+	
+	public boolean show_login_screen() throws Exception { 
+		try {
+			Stage mainStage = (Stage)input_text.getScene().getWindow();
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/application/LoginScreen.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("로그인");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            LoginController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isLogined();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+	}
+	
+	 /**
+     * Returns the main stage.
+     * @return
+     */
+    public Stage getPrimaryStage() {
+        return (Stage)input_text.getScene().getWindow();
+    }
 	
 	public void change_title(ActionEvent event) {
 		 Stage primStage = (Stage) input_text.getScene().getWindow();
@@ -166,4 +225,10 @@ public class MainController {
 		loginscene = new Login();
 		loginscene.start(primStage); */
 	}
+	
+	public void set_status(String mention) {
+		txt_status.setText(mention);
+
+	}
 }
+	

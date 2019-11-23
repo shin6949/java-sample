@@ -11,14 +11,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Text?>
 
-<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="451.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
-   <children>
-      <BorderPane prefHeight="448.0" prefWidth="401.0">
-         <center>
-            <TextArea fx:id="input_text" prefHeight="425.0" prefWidth="410.0" BorderPane.alignment="CENTER" />
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="application.MainController">
+	 <center>
+            <TextArea fx:id="input_text" prefHeight="425.0" prefWidth="401.0" BorderPane.alignment="CENTER" />
          </center>
          <top>
             <BorderPane prefHeight="57.0" prefWidth="401.0" BorderPane.alignment="CENTER">
@@ -122,8 +119,6 @@
             </BorderPane>
          </top>
          <bottom>
-            <Text fx:id="txt_status" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="396.12109375" BorderPane.alignment="CENTER_LEFT" />
+            <Text fx:id="txt_status" strokeType="OUTSIDE" strokeWidth="0.0" text="비로그인 상태입니다." wrappingWidth="396.12109375" BorderPane.alignment="CENTER_LEFT" />
          </bottom>
-      </BorderPane>
-   </children>
-</FlowPane>
+</BorderPane>
