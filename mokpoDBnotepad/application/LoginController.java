@@ -14,11 +14,11 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LoginController {
-	
+public class LoginController implements DialogScreen {
 	
 	@FXML private Button btn_login;
 	@FXML private TextField input_id;
+	@FXML private TextField input_name;
 	@FXML private PasswordField input_password;
 	@FXML private ProgressBar progressbar = new ProgressBar(0);
 
