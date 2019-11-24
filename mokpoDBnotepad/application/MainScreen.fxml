@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="application.MainController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
 	 <center>
             <TextArea fx:id="input_text" prefHeight="425.0" prefWidth="401.0" BorderPane.alignment="CENTER" />
          </center>
@@ -65,9 +65,9 @@
                            <items>
                               <MenuItem fx:id="menuItem_login" mnemonicParsing="false" onAction="#btn_login" text="로그인" />
                               <MenuItem fx:id="menuItem_register" mnemonicParsing="false" onAction="#btn_register" text="회원가입" />
-                              <MenuItem fx:id="menuItem_logout" mnemonicParsing="false" text="로그아웃" visible="false" />
-                              <MenuItem fx:id="menuItem_upload" mnemonicParsing="false" text="업로드" visible="false" />
-                              <MenuItem fx:id="menuItem_manage" mnemonicParsing="false" text="관리" visible="false" />
+                              <MenuItem fx:id="menuItem_logout" mnemonicParsing="false" onAction="#logout" text="로그아웃" visible="false" />
+                              <MenuItem fx:id="menuItem_upload" mnemonicParsing="false" onAction="#upload" text="업로드" visible="false" />
+                              <MenuItem fx:id="menuItem_manage" mnemonicParsing="false" onAction="#run_manageScreen" text="관리" visible="false" />
                            </items>
                         </Menu>
                       <Menu mnemonicParsing="false" text="도움말">
@@ -112,7 +112,6 @@
                                  </image>
                               </ImageView>
                            </graphic> </Button>
-                        <Button fx:id="btn_Test" mnemonicParsing="false" onAction="#change_title" text="Button" />
                     </items>
                   </ToolBar>
                </center>

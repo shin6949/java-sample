@@ -8,6 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
@@ -22,6 +24,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -63,6 +66,8 @@ public class MainController {
 	public static String logined_id;
 	public static String logined_name;
 	public static Boolean Logined = false;
+	
+	private String not_login_mention = "비로그인 상태입니다.";
 	
 	public void btn_save(ActionEvent event) {
 		String text = input_text.getText();
@@ -158,7 +163,8 @@ public class MainController {
 	public void btn_login(ActionEvent event) throws Exception { 
 		Boolean logined = show_login_screen();
 		if(logined) {
-			txt_status.setText(logined_id + "님 환영합니다.");
+			txt_status.setText(logined_name + "님 환영합니다.");
+			change_title("메모장");
 			menuItem_login.setVisible(false);
 			menuItem_register.setVisible(false);
 			menuItem_logout.setVisible(true);
@@ -205,9 +211,9 @@ public class MainController {
         return (Stage)input_text.getScene().getWindow();
     }
 	
-	public void change_title(ActionEvent event) {
+	public void change_title(String Title) {
 		 Stage primStage = (Stage) input_text.getScene().getWindow();
-		 primStage.setTitle(input_text.getText());
+		 primStage.setTitle(Title);
 	}
 	
 	public void set_exit_action() {
@@ -232,10 +238,11 @@ public class MainController {
             Stage dialogStage = new Stage();
             dialogStage.setTitle("회원가입");
             dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(mainStage);
+            //dialogStage.initOwner(mainStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
+            dialogStage.setResizable(false);
+            
             // Set the person into the controller.
             RegisterController controller = loader.getController();
             controller.setDialogStage(dialogStage);
@@ -250,7 +257,82 @@ public class MainController {
 	
 	public void set_status(String mention) {
 		txt_status.setText(mention);
+	}
+	
+	public void logout(ActionEvent event) {
+		logined_id = null;
+		logined_name = null;
+		Logined = false;
+		txt_status.setText(not_login_mention);
+		change_title("메모장 - 비로그인 상태");
+		menuItem_login.setVisible(true);
+		menuItem_register.setVisible(true);
+		menuItem_logout.setVisible(false);
+		menuItem_upload.setVisible(false);
+		menuItem_manage.setVisible(false);
+	}
+	
+	public void run_manageScreen() {
+		try {
+			//Stage mainStage = (Stage)input_text.getScene().getWindow();
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/application/NoteManageScreen.fxml"));
+            BorderPane page = (BorderPane) loader.load();
 
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("메모 관리");
+            dialogStage.setResizable(false);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            //dialogStage.initOwner(mainStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            
+            // Set the person into the controller.
+            ManageController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public void upload(ActionEvent event) {
+		SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String test2 = test.format(new Date());
+		java.sql.Timestamp now_date = java.sql.Timestamp.valueOf(test2);
+		
+		TextInputDialog dialog = new TextInputDialog(test2);
+		dialog.setTitle("제목 입력");
+		dialog.setHeaderText("저장할 제목을 입력하세요.");
+		dialog.setContentText(null);
+		
+		ConnectDB id = new ConnectDB();
+		
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()){
+			String title = result.get();
+			
+			if(id.insert_Note(title, logined_id, now_date, input_text.getText())) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("알림");
+				alert.setHeaderText(null);
+				alert.setContentText("업로드가 완료되었습니다.");
+
+				alert.showAndWait();
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("알림");
+				alert.setHeaderText(null);
+				alert.setContentText("업로드에 실패하였습니다.");
+
+				alert.showAndWait();
+			}
+		}
 	}
 }
 	

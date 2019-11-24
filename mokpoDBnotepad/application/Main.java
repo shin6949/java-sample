@@ -25,7 +25,7 @@ public class Main extends Application {
 			    }
 			}); 	
 			
-			primaryStage.setTitle("메모장 - 로그아웃 상태");
+			primaryStage.setTitle("메모장 - 비로그인 상태");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			

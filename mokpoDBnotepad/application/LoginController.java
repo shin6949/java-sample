@@ -1,11 +1,14 @@
 package application;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -14,7 +17,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LoginController implements DialogScreen {
+public class LoginController implements DialogScreen, Runnable, Initializable {
 	
 	@FXML private Button btn_login;
 	@FXML private TextField input_id;
@@ -24,11 +27,12 @@ public class LoginController implements DialogScreen {
 
 	private boolean Logined = false;
 	private Stage dialogStage;
+	String input_id_string;
 	
 	public void login() {
 		progressbar.setVisible(true);
 		progressbar.setProgress(0.1);
-		String input_id_string = input_id.getText();
+		input_id_string = input_id.getText();
 		
 		MainController.logined_id = null;
 		progressbar.setProgress(0.2);	
@@ -37,12 +41,15 @@ public class LoginController implements DialogScreen {
 			Connection conn = DriverManager.getConnection(LoginManager.DB_URL, LoginManager.DB_ID, LoginManager.DB_PW);
 			progressbar.setProgress(0.3);	
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, name FROM Users WHERE ID = '" + input_id_string + "' AND pw = '" + input_password.getText() + "'");
+			ResultSet rs;
+			rs = stmt.executeQuery("SELECT id, name FROM Users WHERE ID = '" + input_id.getText() + "' AND pw = '" + input_password.getText() + "'");
 			progressbar.setProgress(0.4);
 			
 			if(rs.next()) {
 				String ID = rs.getString("ID");
+				String name = rs.getString("name");
 				MainController.logined_id = ID;
+				MainController.logined_name = name;
 			}
 			
 			stmt.close();
@@ -81,5 +88,15 @@ public class LoginController implements DialogScreen {
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
+
+	@Override
+	public void run() {
+			
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+
+	}
 }
 	
