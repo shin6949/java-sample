@@ -15,16 +15,16 @@ public class TableRowDataModel {
         this.context = context;
     }
  
-    public StringProperty nameProperty() {
+    public StringProperty title() {
         return title;
     }
-    public StringProperty addressProperty() {
+    public StringProperty make_time() {
         return make_time;
     }
-    public StringProperty genderProperty() {
+    public StringProperty modified_time() {
         return modified_time;
     }
-    public StringProperty classNumProperty() {
+    public StringProperty context() {
         return context;
     }
 }
