@@ -2,20 +2,24 @@ package application;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class ManageController implements DialogScreen {
@@ -31,6 +35,7 @@ public class ManageController implements DialogScreen {
 	@FXML ProgressBar progressBar;
 	
 	ObservableList<TableRowDataModel> myList = FXCollections.observableArrayList();
+	RunningNote runningnote = new RunningNote(null, false);
 
 	public void initialize() {
 		task = new Task<Void>() {
@@ -66,6 +71,7 @@ public class ManageController implements DialogScreen {
 						String modified_time_string = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(mod_time);
 						
 						String context = rs.getString("context");
+						
 						
 						table.getItems().add(new TableRowDataModel(new SimpleStringProperty(title), new SimpleStringProperty(make_time_string),
 								new SimpleStringProperty(modified_time_string), new SimpleStringProperty(context)));
@@ -103,4 +109,65 @@ public class ManageController implements DialogScreen {
 	 public void setDialogStage(Stage dialogStage) {
 	        this.dialogStage = dialogStage;
 	    }
+	 
+	 public RunningNote return_currentnote() { return runningnote; }
+
+	 public void btn_edit() {
+		 
+	 }
+	 
+	 public void btn_delete() {
+		 task = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					progressBar.setVisible(true);
+					String make_time_string = null;
+					TableRowDataModel List;
+					
+					if(isCancelled()) { progressBar.setVisible(false); }
+					
+					if(table.getSelectionModel().getSelectedItem() != null) {
+					List = table.getSelectionModel().getSelectedItem();
+					System.out.println(List.make_time().get()); 
+					make_time_string = List.make_time().get();
+					
+					System.out.println(make_time_string);
+					
+					try {
+						Connection conn = DriverManager.getConnection(LoginManager.DB_URL, LoginManager.DB_ID, LoginManager.DB_PW);
+						Statement stmt = conn.createStatement();
+						PreparedStatement pstmt = conn.prepareStatement("DELETE FROM note WHERE make_time = ?");
+						pstmt.setString(1, make_time_string);
+						pstmt.executeUpdate();
+
+						stmt.close();
+						conn.close();
+						pstmt.close();
+						
+						Platform.runLater(new Runnable() {
+			                 @Override public void run() {
+			                	 Alert alert = new Alert(AlertType.WARNING);
+									alert.setTitle("알림");
+									alert.setHeaderText(null);
+									alert.setContentText("삭제 완료");
+									
+									alert.showAndWait();
+			                 }
+			             });
+						
+						table.getItems().remove(List);
+					}  catch (Exception e1) { e1.printStackTrace(); } 
+					}
+
+					return null;
+				}
+				
+			};
+			progressBar.progressProperty().bind(task.progressProperty());
+
+			Thread thread = new Thread(task);
+			thread.setDaemon(true);
+			thread.start();
+	 }
+	 
 }
