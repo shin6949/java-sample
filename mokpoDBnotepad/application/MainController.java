@@ -8,10 +8,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,6 +30,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
@@ -62,6 +70,8 @@ public class MainController {
 	@FXML private Button btn_Test;
 	
 	@FXML private Text txt_status;
+	
+	@FXML private ProgressBar progressBar;
 	
 	public static String logined_id;
 	public static String logined_name;
@@ -272,33 +282,84 @@ public class MainController {
 		menuItem_manage.setVisible(false);
 	}
 	
-	public void run_manageScreen() {
+	RunningNote runningnote = new RunningNote(null, false);
+	
+	public RunningNote show_manageScreen() {
 		try {
-			//Stage mainStage = (Stage)input_text.getScene().getWindow();
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader();
+			FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/application/NoteManageScreen.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
-            // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("메모 관리");
             dialogStage.setResizable(false);
             dialogStage.initModality(Modality.WINDOW_MODAL);
-            //dialogStage.initOwner(mainStage);
+
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-            
-            // Set the person into the controller.
+
             ManageController controller = loader.getController();
             controller.setDialogStage(dialogStage);
 
-            // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
-
+                        
+            return controller.return_currentnote();
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
+	}
+	
+	private Task<Void> task;
+	
+	public void run_manageScreen() {
+		runningnote = show_manageScreen();
+		
+		if(runningnote.is_edit) {
+			task = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					progressBar.setVisible(true);
+					
+					if(isCancelled()) { progressBar.setVisible(false); }
+									
+					try {
+						Connection conn = DriverManager.getConnection(LoginManager.DB_URL, LoginManager.DB_ID, LoginManager.DB_PW);
+						updateProgress(20, 100);
+						Statement stmt = conn.createStatement();
+						updateProgress(30, 100);
+						ResultSet rs;
+						rs = stmt.executeQuery("SELECT context FROM note WHERE make_time = '" + runningnote.running_maketime + "'");
+						
+						if(rs.next()) {
+							String context  = rs.getString("context");
+							
+							updateProgress(40, 100);
+							
+							input_text.setText(context);
+							
+							updateProgress(100, 100);
+							progressBar.setVisible(false);
+						}
+						
+						stmt.close();
+						conn.close();
+						rs.close();
+					
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				  }	
+					
+					return null;
+				}
+				
+			};
+			progressBar.progressProperty().bind(task.progressProperty());
+
+			Thread thread = new Thread(task);
+			thread.setDaemon(true);
+			thread.start();
+		}
 	}
 	
 	public void upload(ActionEvent event) {

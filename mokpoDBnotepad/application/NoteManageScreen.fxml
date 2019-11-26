@@ -29,9 +29,9 @@
                <children>
                   <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="114.0" progress="0.0" visible="false" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="    " />
-                  <Button fx:id="btn_modify" mnemonicParsing="false" prefHeight="23.0" prefWidth="71.0" text="편집" />
+                  <Button fx:id="btn_modify" mnemonicParsing="false" onAction="#btn_edit" prefHeight="23.0" prefWidth="71.0" text="편집" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  " />
-                  <Button fx:id="btn_delete" mnemonicParsing="false" prefHeight="23.0" prefWidth="68.0" text="삭제" />
+                  <Button fx:id="btn_delete" mnemonicParsing="false" onAction="#btn_delete" prefHeight="23.0" prefWidth="68.0" text="삭제" />
                </children>
             </FlowPane>
          </right>

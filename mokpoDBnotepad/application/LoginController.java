@@ -19,7 +19,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LoginController implements DialogScreen, Runnable, Initializable {
+public class LoginController implements DialogScreen {
 	
 	@FXML private Button btn_login;
 	@FXML private TextField input_id;
@@ -117,15 +117,5 @@ public class LoginController implements DialogScreen, Runnable, Initializable {
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
-
-	@Override
-	public void run() {
-			
-	}
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-
-	}
 }
 	
