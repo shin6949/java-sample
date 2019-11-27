@@ -65,6 +65,15 @@
                                  </accelerator></MenuItem>
                         </items>
                       </Menu>
+                  <Menu mnemonicParsing="false" text="수학">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="선택한 영역 계산">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="M" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                    </items>
+                  </Menu>
                         <Menu mnemonicParsing="false" text="클라우드">
                            <items>
                               <MenuItem fx:id="menuItem_login" mnemonicParsing="false" onAction="#btn_login" text="로그인" />

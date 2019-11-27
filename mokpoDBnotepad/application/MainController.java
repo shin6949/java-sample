@@ -50,6 +50,7 @@ public class MainController {
 	@FXML private MenuItem menuItem_new;
 	@FXML private MenuItem menuItem_exit;
 	
+	@FXML private MenuItem menuItem_undo;
 	@FXML private MenuItem menuItem_cut;
 	@FXML private MenuItem menuItem_copy;
 	@FXML private MenuItem menuItem_paste;
@@ -60,6 +61,7 @@ public class MainController {
 	@FXML private MenuItem menuItem_upload;
 	@FXML private MenuItem menuItem_reupload;
 	@FXML private MenuItem menuItem_manage;
+	
 	
 	@FXML public TextArea input_text;
 	
@@ -173,6 +175,7 @@ public class MainController {
 	public void btn_cut (ActionEvent event) { input_text.cut(); }
 	public void btn_copy (ActionEvent event) { input_text.copy(); }
 	public void btn_paste (ActionEvent event) { input_text.paste(); }
+	public void undo (ActionEvent event) { input_text.undo(); }
 	
 	public void btn_login(ActionEvent event) throws Exception { 
 		Boolean logined = show_login_screen();
