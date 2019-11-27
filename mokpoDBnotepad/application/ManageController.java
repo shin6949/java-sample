@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,10 +17,12 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 public class ManageController implements DialogScreen {
@@ -34,8 +37,13 @@ public class ManageController implements DialogScreen {
 	@FXML TableColumn<TableRowDataModel, String> contextColumn;
 	@FXML ProgressBar progressBar;
 	
+	@FXML Button btn_modify_title;
+	@FXML Button btn_modify;
+	@FXML Button btn_delete;
+	
 	ObservableList<TableRowDataModel> myList = FXCollections.observableArrayList();
 	RunningNote runningnote = new RunningNote(null, false);
+	String new_title = "test";
 
 	public void initialize() {
 		task = new Task<Void>() {
@@ -113,7 +121,22 @@ public class ManageController implements DialogScreen {
 	 public RunningNote return_currentnote() { return runningnote; }
 
 	 public void btn_edit() {
+		 TableRowDataModel List;
+		 if(table.getSelectionModel().getSelectedItem() != null) {
+		 List = table.getSelectionModel().getSelectedItem();
 		 
+		 runningnote.running_maketime = List.make_time().get();
+		 runningnote.is_edit = true;
+		 
+		 dialogStage.close();
+		 } else {
+        	 Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("알림");
+				alert.setHeaderText(null);
+				alert.setContentText("편집할 내용을 선택하세요.");
+				
+				alert.showAndWait();
+		 }
 	 }
 	 
 	 public void btn_delete() {
@@ -146,7 +169,7 @@ public class ManageController implements DialogScreen {
 						
 						Platform.runLater(new Runnable() {
 			                 @Override public void run() {
-			                	 Alert alert = new Alert(AlertType.WARNING);
+			                	 Alert alert = new Alert(AlertType.INFORMATION);
 									alert.setTitle("알림");
 									alert.setHeaderText(null);
 									alert.setContentText("삭제 완료");
@@ -156,6 +179,7 @@ public class ManageController implements DialogScreen {
 			             });
 						
 						table.getItems().remove(List);
+						progressBar.setVisible(false);
 					}  catch (Exception e1) { e1.printStackTrace(); } 
 					}
 
@@ -170,4 +194,90 @@ public class ManageController implements DialogScreen {
 			thread.start();
 	 }
 	 
+	 
+	 public void btn_modify_title() {
+		TableRowDataModel List;
+		List = table.getSelectionModel().getSelectedItem();
+		
+		
+		if(table.getSelectionModel().getSelectedItem() != null) {
+			 runningnote.running_maketime = List.make_time().get();
+			 runningnote.is_edit = false;
+			 
+			 TextInputDialog dialog = new TextInputDialog(null);
+			 dialog.setTitle("제목 수정");
+			 dialog.setHeaderText("수정 할 제목을 입력하세요.");
+			 dialog.setContentText(null);
+
+			 // Traditional way to get the response value.
+			 Optional<String> result = dialog.showAndWait();
+			 if (result.isPresent()){
+				 progressBar.progressProperty().bind(task.progressProperty());
+				 	
+				 new_title = result.get();
+				 
+				Thread thread = new Thread(task);
+				thread.setDaemon(true);
+				thread.start();
+			 }
+			} else {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("알림");
+				alert.setHeaderText(null);
+				alert.setContentText("수정할 내용을 선택하세요.");
+				
+				alert.showAndWait();
+			}
+		 
+		 task = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					progressBar.setVisible(true);
+					String make_time_string = null;
+					TableRowDataModel List;
+					
+					if(isCancelled()) { progressBar.setVisible(false); }
+										
+					System.out.println(make_time_string);
+					
+					try {
+						Connection conn = DriverManager.getConnection(LoginManager.DB_URL, LoginManager.DB_ID, LoginManager.DB_PW);
+						Statement stmt = conn.createStatement();
+						PreparedStatement pstmt = conn.prepareStatement("UPDATE note SET title = ? WHERE make_time = ?");
+						
+						pstmt.setString(1, new_title);
+						pstmt.setString(2, runningnote.running_maketime);
+						pstmt.executeUpdate();
+
+						stmt.close();
+						conn.close();
+						pstmt.close();
+						
+						Platform.runLater(new Runnable() {
+			                 @Override public void run() {
+			                	 Alert alert = new Alert(AlertType.INFORMATION);
+									alert.setTitle("알림");
+									alert.setHeaderText(null);
+									alert.setContentText("제목 변경 완료");
+									
+									alert.showAndWait();
+			                 }
+			             });
+						
+						for ( int i = 0; i < table.getItems().size(); i++) {
+							table.getItems().clear();
+						}
+						
+						initialize();
+					}  catch (Exception e1) { e1.printStackTrace(); } 
+
+					return null;
+				}
+				
+			};
+
+			
+			
+			
+	 }
 }

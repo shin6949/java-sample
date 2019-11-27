@@ -10,14 +10,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
-import javafx.beans.property.SimpleStringProperty;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -58,6 +58,7 @@ public class MainController {
 	@FXML private MenuItem menuItem_register;
 	@FXML private MenuItem menuItem_logout;
 	@FXML private MenuItem menuItem_upload;
+	@FXML private MenuItem menuItem_reupload;
 	@FXML private MenuItem menuItem_manage;
 	
 	@FXML public TextArea input_text;
@@ -138,7 +139,10 @@ public class MainController {
 		alert.setContentText("작성하신 내용이 저장되지 않고 삭제됩니다. 계속하시겠습니까?");
 
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK){ input_text.clear(); }
+		if (result.get() == ButtonType.OK){ 
+			input_text.clear();
+			menuItem_reupload.setVisible(false);	
+		}
 		else { }
 		}
 	}
@@ -238,26 +242,20 @@ public class MainController {
 	
 	public void btn_register(ActionEvent event) {
 		try {
-			Stage mainStage = (Stage)input_text.getScene().getWindow();
-            // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/application/RegisterScreen.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
-            // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("회원가입");
             dialogStage.initModality(Modality.WINDOW_MODAL);
-            //dialogStage.initOwner(mainStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
             dialogStage.setResizable(false);
-            
-            // Set the person into the controller.
+
             RegisterController controller = loader.getController();
             controller.setDialogStage(dialogStage);
 
-            // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 
         } catch (IOException e) {
@@ -345,6 +343,8 @@ public class MainController {
 						stmt.close();
 						conn.close();
 						rs.close();
+						
+						menuItem_reupload.setVisible(true);
 					
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -395,5 +395,58 @@ public class MainController {
 			}
 		}
 	}
-}
 	
+	public void btn_reupload() {
+		task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				progressBar.setVisible(true);
+				
+				if(isCancelled()) { progressBar.setVisible(false); }
+								
+				try {
+					Connection conn = DriverManager.getConnection(LoginManager.DB_URL, LoginManager.DB_ID, LoginManager.DB_PW);
+					updateProgress(20, 100);
+					Statement stmt = conn.createStatement();
+					updateProgress(30, 100);
+
+					PreparedStatement pstmt = conn.prepareStatement("UPDATE note SET context = ? WHERE make_time = ?");
+					
+					pstmt.setString(1, input_text.getText());
+					pstmt.setString(2, runningnote.running_maketime);
+					pstmt.executeUpdate();
+					
+					stmt.close();
+					conn.close();
+					pstmt.close();
+					
+					updateProgress(100, 100);
+					progressBar.setVisible(false);
+				
+					Platform.runLater(new Runnable() {
+		                 @Override public void run() {
+		                	 Alert alert = new Alert(AlertType.INFORMATION);
+								alert.setTitle("알림");
+								alert.setHeaderText(null);
+								alert.setContentText("업로드 완료");
+								
+								alert.showAndWait();
+		                 }
+		             });
+					
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			  }	
+				
+				return null;
+			}
+			
+		};
+		progressBar.progressProperty().bind(task.progressProperty());
+
+		Thread thread = new Thread(task);
+		thread.setDaemon(true);
+		thread.start();
+	}
+	
+} //class end

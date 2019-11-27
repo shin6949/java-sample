@@ -70,7 +70,8 @@
                               <MenuItem fx:id="menuItem_login" mnemonicParsing="false" onAction="#btn_login" text="로그인" />
                               <MenuItem fx:id="menuItem_register" mnemonicParsing="false" onAction="#btn_register" text="회원가입" />
                               <MenuItem fx:id="menuItem_logout" mnemonicParsing="false" onAction="#logout" text="로그아웃" visible="false" />
-                              <MenuItem fx:id="menuItem_upload" mnemonicParsing="false" onAction="#upload" text="업로드" visible="false" />
+                              <MenuItem fx:id="menuItem_upload" mnemonicParsing="false" onAction="#upload" text="새로 업로드" visible="false" />
+                        <MenuItem fx:id="menuItem_reupload" mnemonicParsing="false" onAction="#btn_reupload" text="업데이트" visible="false" />
                               <MenuItem fx:id="menuItem_manage" mnemonicParsing="false" onAction="#run_manageScreen" text="관리" visible="false" />
                            </items>
                         </Menu>
