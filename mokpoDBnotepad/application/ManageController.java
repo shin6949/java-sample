@@ -52,16 +52,17 @@ public class ManageController implements DialogScreen {
 				progressBar.setVisible(true);
 				
 				if(isCancelled()) { progressBar.setVisible(false); }
-								
+
 				try {
+					int i = 0;
 					Connection conn = DriverManager.getConnection(LoginManager.DB_URL, LoginManager.DB_ID, LoginManager.DB_PW);
 					updateProgress(20, 100);
 					Statement stmt = conn.createStatement();
 					updateProgress(30, 100);
 					ResultSet rs;
 					rs = stmt.executeQuery("SELECT title, make_time, modified_time, context FROM note WHERE author = '" + MainController.logined_id + "'");
-					
-					while(rs.next()) {
+
+					while(i < 10 && rs.next()) {
 						String title  = rs.getString("title");
 						
 						updateProgress(40, 100);
@@ -83,14 +84,14 @@ public class ManageController implements DialogScreen {
 						
 						table.getItems().add(new TableRowDataModel(new SimpleStringProperty(title), new SimpleStringProperty(make_time_string),
 								new SimpleStringProperty(modified_time_string), new SimpleStringProperty(context)));
-						
-						updateProgress(100, 100);
-						progressBar.setVisible(false);
+						i++;
 					}
 					
 					stmt.close();
 					conn.close();
 					rs.close();
+					updateProgress(100, 100);
+					progressBar.setVisible(false);
 				
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -234,8 +235,7 @@ public class ManageController implements DialogScreen {
 				protected Void call() throws Exception {
 					progressBar.setVisible(true);
 					String make_time_string = null;
-					TableRowDataModel List;
-					
+										
 					if(isCancelled()) { progressBar.setVisible(false); }
 										
 					System.out.println(make_time_string);
@@ -274,10 +274,6 @@ public class ManageController implements DialogScreen {
 					return null;
 				}
 				
-			};
-
-			
-			
-			
+			};			
 	 }
 }

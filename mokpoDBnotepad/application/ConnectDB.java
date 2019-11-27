@@ -3,7 +3,6 @@ package application;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class ConnectDB {
@@ -30,26 +29,6 @@ public class ConnectDB {
 			stmt.close();
 			conn.close();
 			pstmt.close();
-			
-			return true;
-		} 
-		catch (Exception e1) { e1.printStackTrace(); return false; }
-	}
-	
-	public Boolean load_note(String id) {
-		try {
-			Statement stmt = conn.createStatement();
-			ResultSet rs;
-			rs = stmt.executeQuery("SELECT title, make_time, modified_time, context FROM note WHERE author = '" + id + "'");
-			
-			while(rs.next()) {
-				String title = rs.getString("title");
-				
-			}
-
-			stmt.close();
-			conn.close();
-			rs.close();
 			
 			return true;
 		} 

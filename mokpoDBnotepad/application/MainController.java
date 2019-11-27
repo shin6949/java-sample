@@ -363,6 +363,9 @@ public class MainController {
 	}
 	
 	public void upload(ActionEvent event) {
+		
+		if(input_text.getText().equals("")) {
+		
 		SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String test2 = test.format(new Date());
 		java.sql.Timestamp now_date = java.sql.Timestamp.valueOf(test2);
@@ -394,6 +397,12 @@ public class MainController {
 				alert.showAndWait();
 			}
 		}
+		} else {
+			Alert alert2 = new Alert(AlertType.WARNING);
+			alert2.setTitle("경고");
+			alert2.setHeaderText(null);
+			alert2.setContentText("저장할 내용이 없습니다.");
+		}
 	}
 	
 	public void btn_reupload() {
@@ -409,11 +418,16 @@ public class MainController {
 					updateProgress(20, 100);
 					Statement stmt = conn.createStatement();
 					updateProgress(30, 100);
-
-					PreparedStatement pstmt = conn.prepareStatement("UPDATE note SET context = ? WHERE make_time = ?");
+					
+					SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String test2 = test.format(new Date());
+					java.sql.Timestamp now_date = java.sql.Timestamp.valueOf(test2);
+					
+					PreparedStatement pstmt = conn.prepareStatement("UPDATE note SET context = ?, modified_time = ? WHERE make_time = ?");
 					
 					pstmt.setString(1, input_text.getText());
-					pstmt.setString(2, runningnote.running_maketime);
+					pstmt.setString(2, test2);
+					pstmt.setString(3, runningnote.running_maketime);
 					pstmt.executeUpdate();
 					
 					stmt.close();
@@ -447,6 +461,104 @@ public class MainController {
 		Thread thread = new Thread(task);
 		thread.setDaemon(true);
 		thread.start();
+	}
+	
+	public void toolbar_load(ActionEvent event) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("불러올 위치 선택");
+		alert.setHeaderText(null);
+		alert.setContentText("불러올 위치를 선택하세요.");
+
+		ButtonType buttonTypeOne = new ButtonType("파일");
+		ButtonType buttonTypeTwo = new ButtonType("클라우드");
+		ButtonType buttonTypeCancel = new ButtonType("취소", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeOne){
+			fileOpen(null);
+		} else if (result.get() == buttonTypeTwo) {
+		   if(Logined) {
+			   run_manageScreen();
+		   } else {
+			   Alert alert2 = new Alert(AlertType.CONFIRMATION);
+				alert2.setTitle("경고");
+				alert2.setHeaderText(null);
+				alert2.setContentText("로그인이 되어있지 않습니다. 로그인하시겠습니까?");
+
+				Optional<ButtonType> result2 = alert2.showAndWait();
+				if (result2.get() == ButtonType.OK){ 
+					Boolean logined;
+					try {
+						logined = show_login_screen();
+						if(logined) {
+							txt_status.setText(logined_name + "님 환영합니다.");
+							change_title("메모장");
+							menuItem_login.setVisible(false);
+							menuItem_register.setVisible(false);
+							menuItem_logout.setVisible(true);
+							menuItem_upload.setVisible(true);
+							menuItem_manage.setVisible(true);
+							
+							run_manageScreen();
+						}
+					} catch (Exception e) { e.printStackTrace(); }
+					
+				}
+				else { }
+		   }
+		} else {
+		}
+	}
+	
+	public void toolbar_save(ActionEvent event) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("저장할 위치 선택");
+		alert.setHeaderText(null);
+		alert.setContentText("저장할 위치를 선택하세요.");
+
+		ButtonType buttonTypeOne = new ButtonType("파일로 저장");
+		ButtonType buttonTypeTwo = new ButtonType("클라우드에 저장");
+		ButtonType buttonTypeCancel = new ButtonType("취소", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeOne){
+			btn_save(null);
+		} else if (result.get() == buttonTypeTwo) {
+		   if(Logined) {
+			   run_manageScreen();
+		   } else {
+			   Alert alert2 = new Alert(AlertType.CONFIRMATION);
+				alert2.setTitle("경고");
+				alert2.setHeaderText(null);
+				alert2.setContentText("로그인이 되어있지 않습니다. 로그인하시겠습니까?");
+
+				Optional<ButtonType> result2 = alert2.showAndWait();
+				if (result2.get() == ButtonType.OK){ 
+					Boolean logined;
+					try {
+						logined = show_login_screen();
+						if(logined) {
+							txt_status.setText(logined_name + "님 환영합니다.");
+							change_title("메모장");
+							menuItem_login.setVisible(false);
+							menuItem_register.setVisible(false);
+							menuItem_logout.setVisible(true);
+							menuItem_upload.setVisible(true);
+							menuItem_manage.setVisible(true);
+							
+							upload(null);
+						}
+					} catch (Exception e) { e.printStackTrace(); }
+					
+				}
+				else { }
+		   }
+		} else {
+		}
 	}
 	
 } //class end

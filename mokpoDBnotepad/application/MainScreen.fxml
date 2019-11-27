@@ -96,7 +96,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="toolBar_load" mnemonicParsing="false" onAction="#fileOpen">
+                        <Button fx:id="toolBar_load" mnemonicParsing="false" onAction="#toolbar_load">
                            <tooltip>
                               <Tooltip text="txt 파일을 불러옵니다.(Ctrl+O)" />
                            </tooltip>
@@ -108,7 +108,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                    <Button fx:id="toolBar_save" mnemonicParsing="false" onAction="#btn_save">
+                    <Button fx:id="toolBar_save" mnemonicParsing="false" onAction="#toolbar_save">
                     <tooltip> <Tooltip text="현재 작성한 내용을 저장합니다.(Ctrl+S)" /> </tooltip>
                            <graphic>
                               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
