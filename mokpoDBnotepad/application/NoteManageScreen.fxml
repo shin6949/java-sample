@@ -25,10 +25,9 @@
             <Text fx:id="txt_status" strokeType="OUTSIDE" strokeWidth="0.0" text="최근 10개를 표시합니다." BorderPane.alignment="CENTER" />
          </left>
          <right>
-            <FlowPane prefHeight="46.0" prefWidth="427.0" BorderPane.alignment="CENTER">
+            <FlowPane prefHeight="32.0" prefWidth="370.0" BorderPane.alignment="CENTER">
                <children>
                   <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="114.0" progress="0.0" visible="false" />
-                  <Button fx:id="btn_search" mnemonicParsing="false" text="검색" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="    " />
                   <Button fx:id="btn_modify_title" mnemonicParsing="false" onAction="#btn_modify_title" text="제목 변경" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="    " />

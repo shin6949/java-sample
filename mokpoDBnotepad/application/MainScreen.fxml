@@ -51,6 +51,11 @@
                       </Menu>
                       <Menu mnemonicParsing="false" text="편집">
                         <items>
+                        <MenuItem fx:id="menuItem_undo" mnemonicParsing="false" onAction="#undo" text="실행취소">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
                           <MenuItem fx:id="menuItem_cut" mnemonicParsing="false" onAction="#btn_cut" text="잘라내기">
                                  <accelerator>
                                     <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -67,7 +72,7 @@
                       </Menu>
                   <Menu mnemonicParsing="false" text="수학">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="선택한 영역 계산">
+                      <MenuItem fx:id="menuItem_cal" mnemonicParsing="false" onAction="#btn_cal" text="선택한 영역 계산">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="M" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>

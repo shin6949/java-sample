@@ -61,7 +61,7 @@ public class MainController {
 	@FXML private MenuItem menuItem_upload;
 	@FXML private MenuItem menuItem_reupload;
 	@FXML private MenuItem menuItem_manage;
-	
+	@FXML private MenuItem menuItem_cal;
 	
 	@FXML public TextArea input_text;
 	
@@ -562,6 +562,17 @@ public class MainController {
 		   }
 		} else {
 		}
+	}
+	
+	public void btn_cal(ActionEvent event) {
+		String inputString = input_text.getSelectedText();
+		Calculator in = new Calculator(inputString);
+		
+		in.findOrder();
+
+		String result = Double.toString(in.returnResult());
+		input_text.replaceText(input_text.getSelection(), inputString + " = " + result);
+		System.out.println(in.returnResult());
 	}
 	
 } //class end
