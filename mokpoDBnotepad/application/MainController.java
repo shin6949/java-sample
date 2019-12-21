@@ -367,7 +367,7 @@ public class MainController {
 	
 	public void upload(ActionEvent event) {
 		
-		if(input_text.getText().equals("")) {
+		if(!input_text.getText().equals("")) {
 		
 		SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String test2 = test.format(new Date());
