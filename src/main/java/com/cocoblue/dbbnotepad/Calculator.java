@@ -1,6 +1,6 @@
-package application;
+package com.cocoblue.dbbnotepad;
 
-// ÃâÃ³: https://webclass.tistory.com/entry/JAVA-Infix-%EC%82%AC%EC%B9%99%EC%97%B0%EC%82%B0-%EA%B3%84%EC%82%B0%EA%B8%B0
+// ï¿½ï¿½Ã³: https://webclass.tistory.com/entry/JAVA-Infix-%EC%82%AC%EC%B9%99%EC%97%B0%EC%82%B0-%EA%B3%84%EC%82%B0%EA%B8%B0
 
 import java.util.Stack;
 import java.util.StringTokenizer;

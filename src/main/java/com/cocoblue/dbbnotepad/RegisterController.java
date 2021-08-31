@@ -1,4 +1,4 @@
-package application;
+package com.cocoblue.dbbnotepad;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -60,9 +60,9 @@ public class RegisterController implements DialogScreen {
 	public Boolean check_pw() {
 		if(input_pw.getText().length() < 4 || input_pw.getText().length() >= 20) { 
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("¾Ë¸²");
-			alert.setHeaderText("»ç¿ëÇÒ ¼ö ¾ø´Â ºñ¹Ð¹øÈ£");
-			alert.setContentText("ºñ¹Ð¹øÈ£´Â 4 ~ 20±ÛÀÚ·Î ±¸¼ºµÇ¾î¾ßÇÕ´Ï´Ù.");
+			alert.setTitle("ï¿½Ë¸ï¿½");
+			alert.setHeaderText("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£");
+			alert.setContentText("ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ 4 ~ 20ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
 
 			alert.showAndWait();
 			return false;
@@ -72,9 +72,9 @@ public class RegisterController implements DialogScreen {
 			} 
 		else { 
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("¾Ë¸²");
-			alert.setHeaderText("»ç¿ëÇÒ ¼ö ¾ø´Â ºñ¹Ð¹øÈ£");
-			alert.setContentText("ºñ¹Ð¹øÈ£¸¦ 2Ä­ ¸ðµÎ Á¤È®ÇÏ°Ô ÀÔ·ÂÇÏ¼¼¿ä.");
+			alert.setTitle("ï¿½Ë¸ï¿½");
+			alert.setHeaderText("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£");
+			alert.setContentText("ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ 2Ä­ ï¿½ï¿½ï¿½ ï¿½ï¿½È®ï¿½Ï°ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
 
 			alert.showAndWait();
 			return false;		
@@ -110,9 +110,9 @@ public class RegisterController implements DialogScreen {
 		if(check_vaild()) {
 			if(DB_insert()) {
 				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("¾Ë¸²");
+				alert.setTitle("ï¿½Ë¸ï¿½");
 				alert.setHeaderText(null);
-				alert.setContentText("È¸¿ø °¡ÀÔÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù!");
+				alert.setContentText("È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!");
 
 				alert.showAndWait();
 				dialogStage.close();
@@ -123,9 +123,9 @@ public class RegisterController implements DialogScreen {
 	public void btn_checkID(ActionEvent event) {
 		if(check_id()) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("¾Ë¸²");
+			alert.setTitle("ï¿½Ë¸ï¿½");
 			alert.setHeaderText(null);
-			alert.setContentText("»ç¿ëÇÒ ¼ö ÀÖ´Â IDÀÔ´Ï´Ù. ÇöÀç ÀÔ·ÂÇÑ ID¸¦ »ç¿ëÇÏ½Ã°Ú½À´Ï±î?");
+			alert.setContentText("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ IDï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ IDï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?");
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK){
@@ -133,9 +133,9 @@ public class RegisterController implements DialogScreen {
 			} else {}
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("¾Ë¸²");
-			alert.setHeaderText("»ç¿ëÇÒ ¼ö ¾ø´Â ID");
-			alert.setContentText("»ç¿ëÇÒ ¼ö ¾ø´Â ID ÀÔ´Ï´Ù.");
+			alert.setTitle("ï¿½Ë¸ï¿½");
+			alert.setHeaderText("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ID");
+			alert.setContentText("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ID ï¿½Ô´Ï´ï¿½.");
 
 			alert.showAndWait();
 		}

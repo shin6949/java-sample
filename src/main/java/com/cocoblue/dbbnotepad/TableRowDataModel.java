@@ -1,4 +1,4 @@
-package application;
+package com.cocoblue.dbbnotepad;
 
 import javafx.beans.property.StringProperty;
 

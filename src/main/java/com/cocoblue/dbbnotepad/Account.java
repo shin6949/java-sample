@@ -1,4 +1,4 @@
-package application;
+package com.cocoblue.dbbnotepad;
 
 public class Account {
 	public String logined_id;

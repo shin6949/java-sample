@@ -1,4 +1,4 @@
-package application;
+package com.cocoblue.dbbnotepad;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -132,9 +132,9 @@ public class ManageController implements DialogScreen {
 		 dialogStage.close();
 		 } else {
         	 Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("¾Ë¸²");
+				alert.setTitle("ï¿½Ë¸ï¿½");
 				alert.setHeaderText(null);
-				alert.setContentText("ÆíÁýÇÒ ³»¿ëÀ» ¼±ÅÃÇÏ¼¼¿ä.");
+				alert.setContentText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
 				
 				alert.showAndWait();
 		 }
@@ -171,9 +171,9 @@ public class ManageController implements DialogScreen {
 						Platform.runLater(new Runnable() {
 			                 @Override public void run() {
 			                	 Alert alert = new Alert(AlertType.INFORMATION);
-									alert.setTitle("¾Ë¸²");
+									alert.setTitle("ï¿½Ë¸ï¿½");
 									alert.setHeaderText(null);
-									alert.setContentText("»èÁ¦ ¿Ï·á");
+									alert.setContentText("ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
 									
 									alert.showAndWait();
 			                 }
@@ -206,8 +206,8 @@ public class ManageController implements DialogScreen {
 			 runningnote.is_edit = false;
 			 
 			 TextInputDialog dialog = new TextInputDialog(null);
-			 dialog.setTitle("Á¦¸ñ ¼öÁ¤");
-			 dialog.setHeaderText("¼öÁ¤ ÇÒ Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
+			 dialog.setTitle("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+			 dialog.setHeaderText("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
 			 dialog.setContentText(null);
 
 			 // Traditional way to get the response value.
@@ -223,9 +223,9 @@ public class ManageController implements DialogScreen {
 			 }
 			} else {
 				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("¾Ë¸²");
+				alert.setTitle("ï¿½Ë¸ï¿½");
 				alert.setHeaderText(null);
-				alert.setContentText("¼öÁ¤ÇÒ ³»¿ëÀ» ¼±ÅÃÇÏ¼¼¿ä.");
+				alert.setContentText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
 				
 				alert.showAndWait();
 			}
@@ -256,9 +256,9 @@ public class ManageController implements DialogScreen {
 						Platform.runLater(new Runnable() {
 			                 @Override public void run() {
 			                	 Alert alert = new Alert(AlertType.INFORMATION);
-									alert.setTitle("¾Ë¸²");
+									alert.setTitle("ï¿½Ë¸ï¿½");
 									alert.setHeaderText(null);
-									alert.setContentText("Á¦¸ñ º¯°æ ¿Ï·á");
+									alert.setContentText("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
 									
 									alert.showAndWait();
 			                 }

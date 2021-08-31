@@ -1,4 +1,4 @@
-package application;
+package com.cocoblue.dbbnotepad;
 
 public class RunningNote {
 	String running_maketime;

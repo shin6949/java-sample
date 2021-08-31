@@ -1,4 +1,4 @@
-package application;
+package com.cocoblue.dbbnotepad;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

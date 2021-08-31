@@ -1,4 +1,4 @@
-package application;
+package com.cocoblue.dbbnotepad;
 
 public class LoginManager {	
 	//public static String DB_URL = "jdbc:mysql://52.231.157.32/notepad"; old

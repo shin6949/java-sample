@@ -1,4 +1,4 @@
-package application;
+package com.cocoblue.dbbnotepad;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -79,9 +79,9 @@ public class LoginController implements DialogScreen {
 						Platform.runLater(new Runnable() {
 			                 @Override public void run() {
 			                	 Alert alert = new Alert(AlertType.WARNING);
-									alert.setTitle("°æ°í");
-									alert.setHeaderText("ÀÏÄ¡ÇÏ´Â °èÁ¤ÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
-									alert.setContentText("ÀÔ·ÂÇÑ ID ¶Ç´Â ºñ¹Ð¹øÈ£¸¦ È®ÀÎÇÏ¼¼¿ä.");
+									alert.setTitle("ï¿½ï¿½ï¿½");
+									alert.setHeaderText("ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
+									alert.setContentText("ï¿½Ô·ï¿½ï¿½ï¿½ ID ï¿½Ç´ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
 									
 									alert.showAndWait();
 			                 }

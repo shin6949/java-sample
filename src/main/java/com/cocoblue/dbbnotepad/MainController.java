@@ -1,4 +1,4 @@
-package application;
+package com.cocoblue.dbbnotepad;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -80,14 +80,14 @@ public class MainController {
 	public static String logined_name;
 	public static Boolean Logined = false;
 	
-	private String not_login_mention = "ºñ·Î±×ÀÎ »óÅÂÀÔ´Ï´Ù.";
+	private String not_login_mention = "ï¿½ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.";
 	
 	public void btn_save(ActionEvent event) {
 		String text = input_text.getText();
 		System.out.println(text);
 		
 		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT ÆÄÀÏ (*.txt)", "*.txt");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT ï¿½ï¿½ï¿½ï¿½ (*.txt)", "*.txt");
 		fileChooser.getExtensionFilters().add(extFilter);
 		File file = fileChooser.showSaveDialog(menuItem_save.getParentPopup().getScene().getWindow());
 		if (file != null) {
@@ -108,7 +108,7 @@ public class MainController {
 	
 	public void fileOpen (ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT ÆÄÀÏ (*.txt)", "*.txt");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT ï¿½ï¿½ï¿½ï¿½ (*.txt)", "*.txt");
 		fileChooser.getExtensionFilters().add(extFilter);
 		File file = fileChooser.showOpenDialog(menuItem_open.getParentPopup().getScene().getWindow());
 		
@@ -136,9 +136,9 @@ public class MainController {
 	public void make_new (ActionEvent event) {
 		if(!input_text.getText().toString().equals("")) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("°æ°í");
-		alert.setHeaderText("ÅØ½ºÆ® »èÁ¦ ¾Ë¸²");
-		alert.setContentText("ÀÛ¼ºÇÏ½Å ³»¿ëÀÌ ÀúÀåµÇÁö ¾Ê°í »èÁ¦µË´Ï´Ù. °è¼ÓÇÏ½Ã°Ú½À´Ï±î?");
+		alert.setTitle("ï¿½ï¿½ï¿½");
+		alert.setHeaderText("ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¸ï¿½");
+		alert.setContentText("ï¿½Û¼ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ë´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){ 
@@ -152,13 +152,13 @@ public class MainController {
 	public void exit (ActionEvent event) {
 		if(!input_text.getText().toString().equals("")) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("È®ÀÎ");
-		alert.setHeaderText("ÀÛ¼ºÇÑ ³»¿ëÀÌ ÀÖ½À´Ï´Ù.");
-		alert.setContentText("¿É¼ÇÀ» ¼±ÅÃÇØÁÖ¼¼¿ä.");
+		alert.setTitle("È®ï¿½ï¿½");
+		alert.setHeaderText("ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.");
+		alert.setContentText("ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.");
 
-		ButtonType buttonTypeSave = new ButtonType("ÀúÀå ÈÄ ´Ý±â");
-		ButtonType buttonTypedontSave = new ButtonType("ÀúÀå ¾È ÇÔ");
-		ButtonType buttonTypeCancel = new ButtonType("Ãë¼Ò", ButtonData.CANCEL_CLOSE);
+		ButtonType buttonTypeSave = new ButtonType("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ý±ï¿½");
+		ButtonType buttonTypedontSave = new ButtonType("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½");
+		ButtonType buttonTypeCancel = new ButtonType("ï¿½ï¿½ï¿½", ButtonData.CANCEL_CLOSE);
 
 		alert.getButtonTypes().setAll(buttonTypeSave, buttonTypedontSave, buttonTypeCancel);
 
@@ -180,8 +180,8 @@ public class MainController {
 	public void btn_login(ActionEvent event) throws Exception { 
 		Boolean logined = show_login_screen();
 		if(logined) {
-			txt_status.setText(logined_name + "´Ô È¯¿µÇÕ´Ï´Ù.");
-			change_title("¸Þ¸ðÀå");
+			txt_status.setText(logined_name + "ï¿½ï¿½ È¯ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+			change_title("ï¿½Þ¸ï¿½ï¿½ï¿½");
 			menuItem_login.setVisible(false);
 			menuItem_register.setVisible(false);
 			menuItem_logout.setVisible(true);
@@ -195,12 +195,12 @@ public class MainController {
 			Stage mainStage = (Stage)input_text.getScene().getWindow();
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("/application/LoginScreen.fxml"));
+            loader.setLocation(Main.class.getResource("/ui/LoginScreen.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("·Î±×ÀÎ");
+            dialogStage.setTitle("ï¿½Î±ï¿½ï¿½ï¿½");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(mainStage);
             Scene scene = new Scene(page);
@@ -246,11 +246,11 @@ public class MainController {
 	public void btn_register(ActionEvent event) {
 		try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("/application/RegisterScreen.fxml"));
+            loader.setLocation(Main.class.getResource("/ui/RegisterScreen.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("È¸¿ø°¡ÀÔ");
+            dialogStage.setTitle("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -275,7 +275,7 @@ public class MainController {
 		logined_name = null;
 		Logined = false;
 		txt_status.setText(not_login_mention);
-		change_title("¸Þ¸ðÀå - ºñ·Î±×ÀÎ »óÅÂ");
+		change_title("ï¿½Þ¸ï¿½ï¿½ï¿½ - ï¿½ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		menuItem_login.setVisible(true);
 		menuItem_register.setVisible(true);
 		menuItem_logout.setVisible(false);
@@ -288,11 +288,11 @@ public class MainController {
 	public RunningNote show_manageScreen() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("/application/NoteManageScreen.fxml"));
+            loader.setLocation(Main.class.getResource("/ui/NoteManageScreen.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("¸Þ¸ð °ü¸®");
+            dialogStage.setTitle("ï¿½Þ¸ï¿½ ï¿½ï¿½ï¿½ï¿½");
             dialogStage.setResizable(false);
             dialogStage.initModality(Modality.WINDOW_MODAL);
 
@@ -374,8 +374,8 @@ public class MainController {
 		java.sql.Timestamp now_date = java.sql.Timestamp.valueOf(test2);
 		
 		TextInputDialog dialog = new TextInputDialog(test2);
-		dialog.setTitle("Á¦¸ñ ÀÔ·Â");
-		dialog.setHeaderText("ÀúÀåÇÒ Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
+		dialog.setTitle("ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½");
+		dialog.setHeaderText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
 		dialog.setContentText(null);
 		
 		ConnectDB id = new ConnectDB();
@@ -386,25 +386,25 @@ public class MainController {
 			
 			if(id.insert_Note(title, logined_id, now_date, input_text.getText())) {
 				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("¾Ë¸²");
+				alert.setTitle("ï¿½Ë¸ï¿½");
 				alert.setHeaderText(null);
-				alert.setContentText("¾÷·Îµå°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+				alert.setContentText("ï¿½ï¿½ï¿½Îµå°¡ ï¿½Ï·ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 
 				alert.showAndWait();
 			} else {
 				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("¾Ë¸²");
+				alert.setTitle("ï¿½Ë¸ï¿½");
 				alert.setHeaderText(null);
-				alert.setContentText("¾÷·Îµå¿¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù.");
+				alert.setContentText("ï¿½ï¿½ï¿½Îµå¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 
 				alert.showAndWait();
 			}
 		}
 		} else {
 			Alert alert2 = new Alert(AlertType.WARNING);
-			alert2.setTitle("°æ°í");
+			alert2.setTitle("ï¿½ï¿½ï¿½");
 			alert2.setHeaderText(null);
-			alert2.setContentText("ÀúÀåÇÒ ³»¿ëÀÌ ¾ø½À´Ï´Ù.");
+			alert2.setContentText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		}
 	}
 	
@@ -443,9 +443,9 @@ public class MainController {
 					Platform.runLater(new Runnable() {
 		                 @Override public void run() {
 		                	 Alert alert = new Alert(AlertType.INFORMATION);
-								alert.setTitle("¾Ë¸²");
+								alert.setTitle("ï¿½Ë¸ï¿½");
 								alert.setHeaderText(null);
-								alert.setContentText("¾÷·Îµå ¿Ï·á");
+								alert.setContentText("ï¿½ï¿½ï¿½Îµï¿½ ï¿½Ï·ï¿½");
 								
 								alert.showAndWait();
 		                 }
@@ -468,13 +468,13 @@ public class MainController {
 	
 	public void toolbar_load(ActionEvent event) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("ºÒ·¯¿Ã À§Ä¡ ¼±ÅÃ");
+		alert.setTitle("ï¿½Ò·ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½");
 		alert.setHeaderText(null);
-		alert.setContentText("ºÒ·¯¿Ã À§Ä¡¸¦ ¼±ÅÃÇÏ¼¼¿ä.");
+		alert.setContentText("ï¿½Ò·ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
 
-		ButtonType buttonTypeOne = new ButtonType("ÆÄÀÏ");
-		ButtonType buttonTypeTwo = new ButtonType("Å¬¶ó¿ìµå");
-		ButtonType buttonTypeCancel = new ButtonType("Ãë¼Ò", ButtonData.CANCEL_CLOSE);
+		ButtonType buttonTypeOne = new ButtonType("ï¿½ï¿½ï¿½ï¿½");
+		ButtonType buttonTypeTwo = new ButtonType("Å¬ï¿½ï¿½ï¿½ï¿½");
+		ButtonType buttonTypeCancel = new ButtonType("ï¿½ï¿½ï¿½", ButtonData.CANCEL_CLOSE);
 
 		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
 
@@ -486,9 +486,9 @@ public class MainController {
 			   run_manageScreen();
 		   } else {
 			   Alert alert2 = new Alert(AlertType.CONFIRMATION);
-				alert2.setTitle("°æ°í");
+				alert2.setTitle("ï¿½ï¿½ï¿½");
 				alert2.setHeaderText(null);
-				alert2.setContentText("·Î±×ÀÎÀÌ µÇ¾îÀÖÁö ¾Ê½À´Ï´Ù. ·Î±×ÀÎÇÏ½Ã°Ú½À´Ï±î?");
+				alert2.setContentText("ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½. ï¿½Î±ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?");
 
 				Optional<ButtonType> result2 = alert2.showAndWait();
 				if (result2.get() == ButtonType.OK){ 
@@ -496,8 +496,8 @@ public class MainController {
 					try {
 						logined = show_login_screen();
 						if(logined) {
-							txt_status.setText(logined_name + "´Ô È¯¿µÇÕ´Ï´Ù.");
-							change_title("¸Þ¸ðÀå");
+							txt_status.setText(logined_name + "ï¿½ï¿½ È¯ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+							change_title("ï¿½Þ¸ï¿½ï¿½ï¿½");
 							menuItem_login.setVisible(false);
 							menuItem_register.setVisible(false);
 							menuItem_logout.setVisible(true);
@@ -517,13 +517,13 @@ public class MainController {
 	
 	public void toolbar_save(ActionEvent event) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("ÀúÀåÇÒ À§Ä¡ ¼±ÅÃ");
+		alert.setTitle("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½");
 		alert.setHeaderText(null);
-		alert.setContentText("ÀúÀåÇÒ À§Ä¡¸¦ ¼±ÅÃÇÏ¼¼¿ä.");
+		alert.setContentText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
 
-		ButtonType buttonTypeOne = new ButtonType("ÆÄÀÏ·Î ÀúÀå");
-		ButtonType buttonTypeTwo = new ButtonType("Å¬¶ó¿ìµå¿¡ ÀúÀå");
-		ButtonType buttonTypeCancel = new ButtonType("Ãë¼Ò", ButtonData.CANCEL_CLOSE);
+		ButtonType buttonTypeOne = new ButtonType("ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½");
+		ButtonType buttonTypeTwo = new ButtonType("Å¬ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½");
+		ButtonType buttonTypeCancel = new ButtonType("ï¿½ï¿½ï¿½", ButtonData.CANCEL_CLOSE);
 
 		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
 
@@ -535,9 +535,9 @@ public class MainController {
 			   run_manageScreen();
 		   } else {
 			   Alert alert2 = new Alert(AlertType.CONFIRMATION);
-				alert2.setTitle("°æ°í");
+				alert2.setTitle("ï¿½ï¿½ï¿½");
 				alert2.setHeaderText(null);
-				alert2.setContentText("·Î±×ÀÎÀÌ µÇ¾îÀÖÁö ¾Ê½À´Ï´Ù. ·Î±×ÀÎÇÏ½Ã°Ú½À´Ï±î?");
+				alert2.setContentText("ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½. ï¿½Î±ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?");
 
 				Optional<ButtonType> result2 = alert2.showAndWait();
 				if (result2.get() == ButtonType.OK){ 
@@ -545,8 +545,8 @@ public class MainController {
 					try {
 						logined = show_login_screen();
 						if(logined) {
-							txt_status.setText(logined_name + "´Ô È¯¿µÇÕ´Ï´Ù.");
-							change_title("¸Þ¸ðÀå");
+							txt_status.setText(logined_name + "ï¿½ï¿½ È¯ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+							change_title("ï¿½Þ¸ï¿½ï¿½ï¿½");
 							menuItem_login.setVisible(false);
 							menuItem_register.setVisible(false);
 							menuItem_logout.setVisible(true);
