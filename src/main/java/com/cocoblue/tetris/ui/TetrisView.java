@@ -1,4 +1,4 @@
-package mokpotetris;
+package com.cocoblue.tetris.ui;
 
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
@@ -6,15 +6,8 @@ import javax.swing.JTextPane;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.SystemColor;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JTextField;
 import javax.swing.Box;
 import java.awt.Font;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 
 public class TetrisView extends JPanel {
@@ -45,7 +38,7 @@ public class TetrisView extends JPanel {
 			JTextPane txtpnTesxt = new JTextPane();
 			txtpnTesxt.setEnabled(false);
 			txtpnTesxt.setEditable(false);
-			txtpnTesxt.setFont(new Font("³ª´®¹Ù¸¥°íµñ", Font.PLAIN, 25));
+			txtpnTesxt.setFont(new Font("ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 25));
 			verticalBox.add(txtpnTesxt);
 			txtpnTesxt.setText("NEXT");
 			txtpnTesxt.setDisabledTextColor(SystemColor.desktop);
@@ -69,7 +62,7 @@ public class TetrisView extends JPanel {
 				nowlevel.setEditable(false);
 				nowlevel.setDisabledTextColor(SystemColor.desktop);
 				nowlevel.setBackground(new Color(240, 240, 240));
-				nowlevel.setText("ÇöÀç ·¹º§: " + TetrisCanvas.level); //ÇöÀç ·¹º§ Ç¥½Ã
+				nowlevel.setText("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: " + TetrisCanvas.level); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
 				nowlevel.setEnabled(false);
 				
 
@@ -101,10 +94,10 @@ public class TetrisView extends JPanel {
 	}
 	
 	public static void refresh_now_level(int level) {
-		nowlevel.setText("ÇöÀç ·¹º§: " + level);
+		nowlevel.setText("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: " + level);
 	}
 	
 	public static void refresh_delete_line(int line) {
-		deleteline.setText("»èÁ¦ÇÑ ÁÙ ¼ö: " + line);
+		deleteline.setText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½: " + line);
 	}
 }

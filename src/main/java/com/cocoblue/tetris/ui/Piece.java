@@ -1,15 +1,15 @@
-package mokpotetris;
+package com.cocoblue.tetris.ui;
 
 import java.awt.Point;
 
 public abstract class Piece {
-	final int DOWN = 0; //¹æÇâ ÁöÁ¤
+	final int DOWN = 0; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	final int LEFT = 1;
 	final int RIGHT = 2;
-	protected int r[]; //YÃà ÁÂÇ¥ ¹è¿­
-	protected int c[]; //XÃà ÁÂÇ¥ ¹è¿­
-	protected TetrisData data; //Å×Æ®¸®½º ³»ºÎ µ¥ÀÌÅÍ
-	protected Point center; // Á¶°¢ÀÇ Áß½É ÁÂÇ¥
+	protected int r[]; //Yï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½è¿­
+	protected int c[]; //Xï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½è¿­
+	protected TetrisData data; //ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	protected Point center; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ ï¿½ï¿½Ç¥
 	
 	public Piece(TetrisData data) {
 		r = new int[4];
@@ -24,11 +24,11 @@ public abstract class Piece {
 	public int getX() { return center.x; }
 	public int getY() { return center.y; }
 	
-	public boolean copy() { //°ª º¹»ç
+	public boolean copy() { //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		boolean value = false;
 		int x = getX();
 		int y = getY();
-		if(getMinY() + y <= 0) { // °ÔÀÓ Á¾·á »óÈ²
+		if(getMinY() + y <= 0) { // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È²
 			value = true;
 		}
 		
@@ -38,25 +38,25 @@ public abstract class Piece {
 		return value;
 	}
 	
-	public boolean isOverlap(int dir) { //´Ù¸¥ Á¶°¢°ú °ãÄ¡´ÂÁö ÆÄ¾Ç
+	public boolean isOverlap(int dir) { //ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¾ï¿½
 		int x = getX();
 		int y = getY();
 		switch(dir) {
-		case 0: //¾Æ·¡
+		case 0: //ï¿½Æ·ï¿½
 			for(int i = 0; i < r.length; i++) {
 				if(data.getAt(y+r[i]+1, x+c[i]) != 0) {
 					return true;
 				}
 			}
 			break;
-		case 1: //¿ÞÂÊ
+		case 1: //ï¿½ï¿½ï¿½ï¿½
 			for(int i = 0; i < r.length; i++) {
 				if(data.getAt(y+r[i], x+c[i]-1) != 0) {
 					return true;
 				}
 			}
 			break;
-		case 2: //¿À¸¥ÂÊ
+		case 2: //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			for(int i = 0; i < r.length; i++) {
 				if(data.getAt(y+r[i], x+c[i]+1) != 0) {
 					return true;
@@ -108,7 +108,7 @@ public abstract class Piece {
 		return max;
 	}
 	
-	public boolean moveDown() { //¾Æ·¡·Î ÀÌµ¿
+	public boolean moveDown() { //ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 		if(center.y + getMaxY() + 1 < TetrisData.ROW) {
 				if(isOverlap(DOWN) != true) {
 					center.y++;
@@ -124,25 +124,25 @@ public abstract class Piece {
 			return false;
 		}
 	
-	public void moveFullDown() { //ÇÏµåµå·Ó
+	public void moveFullDown() { //ï¿½Ïµï¿½ï¿½ï¿½
 		for(int i = 0; i < 19; i++) {
 			this.moveDown();
 		}
 	}
 	
-	public void moveLeft() { //¿ÞÂÊÀ¸·Î ÀÌµ¿
+	public void moveLeft() { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 		if(center.x + getMinX() -1 >= 0)
 			if(isOverlap(LEFT) != true) {center.x--;}
 			else return;
 	}
 	
-	public void moveRight() { //¿À¸¥ÂÊÀ¸·Î ÀÌµ¿
+	public void moveRight() { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 		if(center.x + getMaxX() + 1 < TetrisData.COL)
 			if(isOverlap(RIGHT) != true) { center.x++; }
 			else return;
 	}
 	
-	public void rotate() { //Á¶°¢ È¸Àü
+	public void rotate() { //ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
 		int rc = roteType();
 		if(rc <= 1) return;
 		
@@ -155,7 +155,7 @@ public abstract class Piece {
 		}
 	}
 	
-	public void rotate4() { //Á¶°¢ È¸Àü
+	public void rotate4() { //ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
 		if(center.x != 9 && center.x != 0) {
 		for(int i = 0; i < 4; i++) {
 			int temp = c[i];

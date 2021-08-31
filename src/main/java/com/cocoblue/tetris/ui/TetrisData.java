@@ -1,11 +1,11 @@
-package mokpotetris;
+package com.cocoblue.tetris.ui;
 
 public class TetrisData {
 	public static final int ROW = 20;
 	public static final int COL = 10;
 	
-	private int data[][]; //ROW x COLÀÇ ¹è¿­
-	private int line; //Áö¿î ÁÙ ¼ö
+	private int data[][]; //ROW x COLï¿½ï¿½ ï¿½è¿­
+	private int line; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
 	
 	public TetrisData() {
 		data = new int[ROW][COL];
@@ -48,7 +48,7 @@ public class TetrisData {
 
 	}
 	
-	public void clear() { //data ¹è¿­ ÃÊ±âÈ­
+	public void clear() { //data ï¿½è¿­ ï¿½Ê±ï¿½È­
 		for(int i = 0; i < ROW; i++) {
 			for(int k = 0; k < COL; k++) {
 				data[i][k] = 0;
@@ -56,7 +56,7 @@ public class TetrisData {
 		}
 	}
 	
-	public void dump() { //data ¹è¿­ ³»¿ë Ãâ·Â
+	public void dump() { //data ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		for(int i = 0; i < ROW; i++) {
 			for(int k = 0; k < COL; k++) {
 				System.out.print(data[i][k] + " ");

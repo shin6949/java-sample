@@ -1,4 +1,4 @@
-package mokpotetris;
+package com.cocoblue.tetris.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,7 +12,7 @@ public class TetrisSideview extends JPanel {
 	
 	public TetrisSideview() {
 		JTextPane txtNext = new JTextPane();
-		txtNext.setFont(new Font("³ª´®¹Ù¸¥°íµñ", Font.PLAIN, 25));
+		txtNext.setFont(new Font("ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 25));
 		txtNext.setText("HOLD");
 		txtNext.setDisabledTextColor(SystemColor.desktop);
 		txtNext.setBackground(new Color(240, 240, 240));

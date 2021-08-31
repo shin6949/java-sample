@@ -1,4 +1,6 @@
-package mokpotetris;
+package com.cocoblue.tetris.ui;
+
+import com.cocoblue.tetris.block.*;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -7,14 +9,14 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class TetrisHoldview extends JPanel {
-	protected TetrisData data; //Å×Æ®¸®½º ³»ºÎ µ¥ÀÌÅÍ
+	protected TetrisData data; //ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	protected Piece current;
 	protected Color colors[];
 	protected int w = 25;
 	protected int margin = 20;
 	public static int holding_num = 8;
 	
-	public Dimension getPreferredSize(){ // Å×Æ®¸®½º ÆÇÀÇ Å©±â ÁöÁ¤
+	public Dimension getPreferredSize(){ // ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int tw = 110;
 		int th = 100;
 		return new Dimension(110, 150);
@@ -22,15 +24,15 @@ public class TetrisHoldview extends JPanel {
 	
 	public TetrisHoldview() {
 		
-		colors = new Color[8]; // Å×Æ®¸®½º ¹è°æ ¹× Á¶°¢ »ö
-		colors[0] = new Color(80, 80, 80); // ¹è°æ»ö(°ËÀºÈ¸»ö)
-		colors[1] = new Color(255, 0, 0); //»¡°£»ö
-		colors[2] = new Color(0, 255, 0); //³ì»ö
-		colors[3] = new Color(0, 200, 255); //ÇÏ´Ã»ö
-		colors[4] = new Color(255, 255, 0); //³ë¶õ»ö
-		colors[5] = new Color(255, 150, 0); //È²Åä»ö
-		colors[6] = new Color(210, 0, 240); //º¸¶ó»ö
-		colors[7] = new Color(40, 0, 240); //ÆÄ¶õ»ö
+		colors = new Color[8]; // ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		colors[0] = new Color(80, 80, 80); // ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½È¸ï¿½ï¿½)
+		colors[1] = new Color(255, 0, 0); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		colors[2] = new Color(0, 255, 0); //ï¿½ï¿½ï¿½
+		colors[3] = new Color(0, 200, 255); //ï¿½Ï´Ã»ï¿½
+		colors[4] = new Color(255, 255, 0); //ï¿½ï¿½ï¿½ï¿½ï¿½
+		colors[5] = new Color(255, 150, 0); //È²ï¿½ï¿½ï¿½
+		colors[6] = new Color(210, 0, 240); //ï¿½ï¿½ï¿½ï¿½ï¿½
+		colors[7] = new Color(40, 0, 240); //ï¿½Ä¶ï¿½ï¿½ï¿½
 		
 		repaint();
 	} 

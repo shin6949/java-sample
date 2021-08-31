@@ -1,4 +1,6 @@
-package mokpotetris;
+package com.cocoblue.tetris.ui;
+
+import com.cocoblue.tetris.block.*;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -34,18 +36,18 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	 
 		addKeyListener(this);
 		
-		colors = new Color[8]; // Å×Æ®¸®½º ¹è°æ ¹× Á¶°¢ »ö
-		colors[0] = new Color(80, 80, 80); // ¹è°æ»ö(°ËÀºÈ¸»ö)
-		colors[1] = new Color(255, 0, 0); //»¡°£»ö
-		colors[2] = new Color(0, 255, 0); //³ì»ö
-		colors[3] = new Color(0, 200, 255); //ÇÏ´Ã»ö
-		colors[4] = new Color(255, 255, 0); //³ë¶õ»ö
-		colors[5] = new Color(255, 150, 0); //È²Åä»ö
-		colors[6] = new Color(210, 0, 240); //º¸¶ó»ö
-		colors[7] = new Color(40, 0, 240); //ÆÄ¶õ»ö
+		colors = new Color[8]; // ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		colors[0] = new Color(80, 80, 80); // ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½È¸ï¿½ï¿½)
+		colors[1] = new Color(255, 0, 0); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		colors[2] = new Color(0, 255, 0); //ï¿½ï¿½ï¿½
+		colors[3] = new Color(0, 200, 255); //ï¿½Ï´Ã»ï¿½
+		colors[4] = new Color(255, 255, 0); //ï¿½ï¿½ï¿½ï¿½ï¿½
+		colors[5] = new Color(255, 150, 0); //È²ï¿½ï¿½ï¿½
+		colors[6] = new Color(210, 0, 240); //ï¿½ï¿½ï¿½ï¿½ï¿½
+		colors[7] = new Color(40, 0, 240); //ï¿½Ä¶ï¿½ï¿½ï¿½
 	}
 	 
-	public void start() { // °ÔÀÓ ½ÃÀÛ
+	public void start() { // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		data.clear();
 		worker = new Thread(this);
 		worker.start();
@@ -55,7 +57,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		repaint();
 	}
 	 
-	public void stop() { //°ÔÀÓ ³¡³ª¸é À½¾Ç Àç»ý Áß´Ü
+	public void stop() { //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ß´ï¿½
 		Stop_Sound();
 		stop = true;
 		current = null;
@@ -64,7 +66,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	public void paint(Graphics g) {
 		super.paint(g);
 	 
-		for(int i = 0; i < TetrisData.ROW; i++) { //½×ÀÎ Á¶°¢µé ±×¸®±â
+		for(int i = 0; i < TetrisData.ROW; i++) { //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
 
 			for(int k = 0; k < TetrisData.COL; k++) {
 				if(data.getAt(i, k) == 0) {
@@ -78,7 +80,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 				}
 			}
 		
-		if(current != null){ // ÇöÀç ³»·Á¿À°í ÀÖ´Â Å×Æ®¸®½º Á¶°¢ ±×¸®±â
+		if(current != null){ // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
 			for(int i = 0; i < 4; i++) {
 				g.setColor(colors[current.getType()]);
 				g.fill3DRect(margin/2 + w * (current.getX()+current.c[i]), margin/2 + w * (current.getY()+current.r[i]), w, w, true);
@@ -86,7 +88,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			}
 		}
 	
-	public Dimension getPreferredSize(){ // Å×Æ®¸®½º ÆÇÀÇ Å©±â ÁöÁ¤
+	public Dimension getPreferredSize(){ // ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int tw = w * TetrisData.COL + margin;
 		int th = w * TetrisData.ROW + margin;
 		return new Dimension(tw, th);
@@ -100,7 +102,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			TetrisView.refresh_delete_line(data.getLine());
 						
 			try {
-				if(makeNew){ // »õ·Î¿î Å×Æ®¸®½º Á¶°¢ ¸¸µé±â
+				if(makeNew){ // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 					if(block_stack[0] == 8 && block_stack[1] == 8 && block_stack[2] == 8) {
 						block_stack[0] = (int)(Math.random() * Integer.MAX_VALUE) % 7;
 						block_stack[1] = (int)(Math.random() * Integer.MAX_VALUE) % 7;
@@ -147,7 +149,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 					
 					makeNew = false;
 					
-				} else { // ÇöÀç ¸¸µé¾îÁø Å×Æ®¸®½º Á¶°¢ ¾Æ·¡·Î ÀÌµ¿
+				} else { // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 					if(current.moveDown()){
 						
 						makeNew = true;
@@ -155,7 +157,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 						if(current.copy()){
 							stop();
 							int score = data.getLine() * 175 * level;
-							JOptionPane.showMessageDialog(this, "°ÔÀÓ ³¡\nÁ¡¼ö : " + score);
+							JOptionPane.showMessageDialog(this, "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½\nï¿½ï¿½ï¿½ï¿½ : " + score);
 						}
 						current = null;
 					}
@@ -180,20 +182,20 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		}
 	}
 	
-	  // Å°º¸µå¸¦ ÀÌ¿ëÇØ¼­ Å×Æ®¸®½º Á¶°¢ Á¦¾î
+	  // Å°ï¿½ï¿½ï¿½å¸¦ ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void keyPressed(KeyEvent e) {
 		if(current == null) return;
 	 
 		switch(e.getKeyCode()) {
-		case 37: // ¿ÞÂÊ È­»ìÇ¥
+		case 37: // ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½Ç¥
 			current.moveLeft();
 			repaint();
 			break;
-		case 39: // ¿À¸¥ÂÊ È­»ìÇ¥
+		case 39: // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½Ç¥
 			current.moveRight();
 			repaint();
 			break;
-		case 38: // À­ÂÊ È­»ìÇ¥
+		case 38: // ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½Ç¥
 			current.rotate();
 			repaint();
 			break;
@@ -201,7 +203,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	         Hold_block();
 	         repaint();
 	         break;
-		case 32: //½ºÆäÀÌ½º¹Ù
+		case 32: //ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½
 			current.moveFullDown();
 			boolean temp = current.moveDown();
 			if(temp) {
@@ -209,7 +211,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 				if(current.copy()) {
 					stop();
 					int score = data.getLine() * 175 * level;
-					JOptionPane.showMessageDialog(this, "°ÔÀÓ ³¡\nÁ¡¼ö : " + score);
+					JOptionPane.showMessageDialog(this, "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½\nï¿½ï¿½ï¿½ï¿½ : " + score);
 				}
 			}
 			data.removeLines();
@@ -223,14 +225,14 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			Level_DOWN();
 			repaint();
 			break;
-		case 40: // ¾Æ·§ÂÊ È­»ìÇ¥
+		case 40: // ï¿½Æ·ï¿½ï¿½ï¿½ È­ï¿½ï¿½Ç¥
 			boolean temp2 = current.moveDown();
 			if(temp2) {
 				makeNew = true;
 				if(current.copy()) {
 					stop();
 					int score = data.getLine() * 175 * level;
-					JOptionPane.showMessageDialog(this, "°ÔÀÓ ³¡\nÁ¡¼ö : " + score);
+					JOptionPane.showMessageDialog(this, "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½\nï¿½ï¿½ï¿½ï¿½ : " + score);
 				}
 			}
 			data.removeLines();

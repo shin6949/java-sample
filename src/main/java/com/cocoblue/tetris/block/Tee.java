@@ -1,4 +1,7 @@
-package mokpotetris;
+package com.cocoblue.tetris.block;
+
+import com.cocoblue.tetris.ui.Piece;
+import com.cocoblue.tetris.ui.TetrisData;
 
 public class Tee extends Piece {
 	public Tee(TetrisData data) {
