@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="321.0" prefWidth="413.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RegisterController">
+   <left>
+      <GridPane alignment="TOP_CENTER" prefHeight="321.0" prefWidth="390.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID" wrappingWidth="98.4453125">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <center>
+                  <TextField fx:id="input_ID" promptText="ID를 입력하세요." BorderPane.alignment="CENTER" />
+               </center>
+               <right>
+                  <Button fx:id="btn_check_id" mnemonicParsing="false" onAction="#btn_checkID" text="중복 확인" BorderPane.alignment="CENTER" />
+               </right>
+            </BorderPane>
+            <Text fx:id="input_name" strokeType="OUTSIDE" strokeWidth="0.0" text="이름" GridPane.rowIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="name" promptText="이름을 입력하세요." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="비밀번호" GridPane.rowIndex="2">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="비밀번호 확인" GridPane.rowIndex="3">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <PasswordField fx:id="input_pw" promptText="비밀번호를 입력하세요." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <PasswordField fx:id="input_pwre" promptText="비밀번호를 다시 입력하세요." GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+   </left>
+   <bottom>
+      <BorderPane prefHeight="46.0" prefWidth="413.0" BorderPane.alignment="CENTER">
+         <right>
+            <Button fx:id="btn_register" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#register" text="회원가입" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </right>
+      </BorderPane>
+   </bottom>
+</BorderPane>
