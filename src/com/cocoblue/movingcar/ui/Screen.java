@@ -18,7 +18,7 @@ public class Screen extends Canvas implements KeyListener {
 
 	private Car[] cars;
 
-	public Screen() throws IOException {
+	public Screen() {
 		try {
 			cars = new Car[]{new Car("image/car.png", 0, 0), new Car("image/car1.png", 0, 50)};
 			addKeyListener(this);
