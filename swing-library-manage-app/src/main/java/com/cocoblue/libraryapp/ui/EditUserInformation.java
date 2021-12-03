@@ -1,4 +1,4 @@
-package com.cocoblue.libraryapp;
+package com.cocoblue.libraryapp.ui;
 
 import com.toedter.calendar.JDateChooser;
 

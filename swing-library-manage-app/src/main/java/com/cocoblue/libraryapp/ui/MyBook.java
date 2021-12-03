@@ -1,4 +1,10 @@
-package com.cocoblue.libraryapp;
+package com.cocoblue.libraryapp.ui;
+
+import com.cocoblue.libraryapp.config.DBInfo;
+import com.cocoblue.libraryapp.dto.Book;
+import com.cocoblue.libraryapp.dto.User;
+import com.cocoblue.libraryapp.service.BookService;
+import com.cocoblue.libraryapp.service.LoginManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -8,15 +14,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MyBook extends JFrame implements Runnable {
+    // GUI Component
     private JPanel contentPane;
-    private JTextField input_searchBooks, input_id;
-    private JPasswordField input_pwd;
-    private DBInfo dbInfo = new DBInfo();
+    private JTextField inputSearchBooks;
+    private final JTextField inputId;
+    private final JPasswordField inputPwd;
+    private final DBInfo dbInfo = new DBInfo();
     private LoginManager loginManager = new LoginManager();
-    private JButton btn_borrow, btn_return, btn_admin;
-    JPanel login_btn_panel, logined_panel, login_panel;
-    InitializeTable area;
-    JLabel logined_status;
+    private final JButton btnBorrow;
+    private final JButton btnReturn;
+    private JButton btnAdmin;
+    private final JPanel loginBtnPanel;
+    private final JPanel loginedPanel;
+    private final JPanel loginPanel;
+    private InitializeTable area;
+    private final JLabel loginedStatus;
+
+    // Service
+    private final BookService bookService = new BookService();
 
     public static void main(String[] args) {
         MyBook frame = new MyBook();
@@ -50,29 +65,29 @@ public class MyBook extends JFrame implements Runnable {
         contentPane.add(tool_box_panel);
         tool_box_panel.setLayout(new GridLayout(0, 1, 0, 0));
 
-        btn_borrow = new JButton("\uB300\uCD9C");
-        btn_borrow.addActionListener(new ActionListener() {
+        btnBorrow = new JButton("\uB300\uCD9C");
+        btnBorrow.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 Book book = dbInfo.load_book("SELECT * FROM Books WHERE name = '" + String.valueOf(area.model.getValueAt(area.table.getSelectedRow(), 0)) + "'", area.load_progressbar);
-                if (book.borrow_book(LoginManager.logined_user, area.load_progressbar)) {
+                if (bookService.borrowBook(LoginManager.logined_user, area.load_progressbar)) {
                     refresh(area.model, area.load_progressbar);
-                    check_borrow_status(btn_borrow, btn_return);
+                    check_borrow_status(btnBorrow, btnReturn);
                 }
             }
         });
-        tool_box_panel.add(btn_borrow);
+        tool_box_panel.add(btnBorrow);
 
-        btn_return = new JButton("\uCC45 \uBC18\uB0A9");
-        btn_return.addActionListener(new ActionListener() {
+        btnReturn = new JButton("\uCC45 \uBC18\uB0A9");
+        btnReturn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (LoginManager.logined_user.return_book(area.load_progressbar)) {
                     refresh(area.model, area.load_progressbar);
-                    check_borrow_status(btn_borrow, btn_return);
+                    check_borrow_status(btnBorrow, btnReturn);
                 }
             }
         });
 
-        tool_box_panel.add(btn_return);
+        tool_box_panel.add(btnReturn);
 
         JButton btn_detail = new JButton("\uC0C1\uC138 \uC815\uBCF4");
         tool_box_panel.add(btn_detail);
@@ -106,36 +121,36 @@ public class MyBook extends JFrame implements Runnable {
         contentPane.add(login_session_panel);
         login_session_panel.setLayout(null);
 
-        login_panel = new JPanel();
-        login_panel.setBounds(0, 0, 359, 35);
-        login_session_panel.add(login_panel);
-        login_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        loginPanel = new JPanel();
+        loginPanel.setBounds(0, 0, 359, 35);
+        login_session_panel.add(loginPanel);
+        loginPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
         JLabel lblId = new JLabel("ID");
         lblId.setHorizontalAlignment(SwingConstants.LEFT);
-        login_panel.add(lblId);
+        loginPanel.add(lblId);
 
-        input_id = new JTextField();
-        login_panel.add(input_id);
-        input_id.setPreferredSize(new Dimension(130, 30));
-        input_id.setColumns(10);
+        inputId = new JTextField();
+        loginPanel.add(inputId);
+        inputId.setPreferredSize(new Dimension(130, 30));
+        inputId.setColumns(10);
 
         JLabel label = new JLabel("\uBE44\uBC00\uBC88\uD638");
-        login_panel.add(label);
+        loginPanel.add(label);
 
-        input_pwd = new JPasswordField();
-        input_pwd.setPreferredSize(new Dimension(130, 30));
-        login_panel.add(input_pwd);
+        inputPwd = new JPasswordField();
+        inputPwd.setPreferredSize(new Dimension(130, 30));
+        loginPanel.add(inputPwd);
 
         //Logined Panel
-        logined_panel = new JPanel();
-        logined_panel.setBounds(0, 0, 599, 35);
-        login_session_panel.add(logined_panel);
-        logined_panel.setVisible(false);
-        logined_panel.setLayout(new BorderLayout(0, 0));
+        loginedPanel = new JPanel();
+        loginedPanel.setBounds(0, 0, 599, 35);
+        login_session_panel.add(loginedPanel);
+        loginedPanel.setVisible(false);
+        loginedPanel.setLayout(new BorderLayout(0, 0));
 
-        logined_status = new JLabel();
-        logined_panel.add(logined_status, BorderLayout.WEST);
+        loginedStatus = new JLabel();
+        loginedPanel.add(loginedStatus, BorderLayout.WEST);
 
         JButton btn_logout = new JButton("\uB85C\uADF8\uC544\uC6C3");
         btn_logout.setPreferredSize(new Dimension(98, 20));
@@ -143,39 +158,39 @@ public class MyBook extends JFrame implements Runnable {
             public void actionPerformed(ActionEvent arg0) {
                 loginManager.request_logout(area.load_progressbar);
                 if (!LoginManager.logined) {
-                    login_panel.setVisible(true);
-                    login_btn_panel.setVisible(true);
-                    logined_panel.setVisible(false);
-                    logined_status.setText("");
+                    loginPanel.setVisible(true);
+                    loginBtnPanel.setVisible(true);
+                    loginedPanel.setVisible(false);
+                    loginedStatus.setText("");
                     btn_admin.setVisible(false);
                     LoginManager.logined_user = new User();
-                    check_borrow_status(btn_borrow, btn_return);
+                    check_borrow_status(btnBorrow, btnReturn);
                 }
             }
         });
-        logined_panel.add(btn_logout, BorderLayout.EAST);
+        loginedPanel.add(btn_logout, BorderLayout.EAST);
 
-        login_btn_panel = new JPanel();
-        login_btn_panel.setBounds(164, 0, 435, 35);
-        login_session_panel.add(login_btn_panel);
-        login_btn_panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-        login_btn_panel.setVisible(true);
+        loginBtnPanel = new JPanel();
+        loginBtnPanel.setBounds(164, 0, 435, 35);
+        login_session_panel.add(loginBtnPanel);
+        loginBtnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+        loginBtnPanel.setVisible(true);
 
         JButton btn_login = new JButton("\uB85C\uADF8\uC778");
-        login_btn_panel.add(btn_login);
+        loginBtnPanel.add(btn_login);
         btn_login.setPreferredSize(new Dimension(100, 30));
         btn_login.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 // login
-                loginManager.request_login(input_id.getText(), input_pwd.getText(), area.load_progressbar);
+                loginManager.request_login(inputId.getText(), inputPwd.getText(), area.load_progressbar);
                 if (LoginManager.logined) {
-                    login_panel.setVisible(false);
-                    login_btn_panel.setVisible(false);
-                    logined_panel.setVisible(true);
-                    input_id.setText("");
-                    input_pwd.setText("");
-                    logined_status.setText(LoginManager.logined_user.name + "님 환영합니다.");
-                    check_borrow_status(btn_borrow, btn_return);
+                    loginPanel.setVisible(false);
+                    loginBtnPanel.setVisible(false);
+                    loginedPanel.setVisible(true);
+                    inputId.setText("");
+                    inputPwd.setText("");
+                    loginedStatus.setText(LoginManager.logined_user.name + "님 환영합니다.");
+                    check_borrow_status(btnBorrow, btnReturn);
 
                     if (LoginManager.logined_user.isadmin == true) {
                         btn_admin.setVisible(true);
@@ -185,7 +200,7 @@ public class MyBook extends JFrame implements Runnable {
         });
 
         JButton btn_register = new JButton("\uD68C\uC6D0\uAC00\uC785");
-        login_btn_panel.add(btn_register);
+        loginBtnPanel.add(btn_register);
         btn_register.setPreferredSize(new Dimension(100, 30));
         btn_register.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -193,7 +208,7 @@ public class MyBook extends JFrame implements Runnable {
             }
         });
 
-        check_borrow_status(btn_borrow, btn_return);
+        check_borrow_status(btnBorrow, btnReturn);
     }
 
     @Override

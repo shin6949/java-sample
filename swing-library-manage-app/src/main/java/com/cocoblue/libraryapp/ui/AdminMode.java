@@ -1,4 +1,8 @@
-package com.cocoblue.libraryapp;
+package com.cocoblue.libraryapp.ui;
+
+import com.cocoblue.libraryapp.config.DBInfo;
+import com.cocoblue.libraryapp.dto.Book;
+import com.cocoblue.libraryapp.dto.User;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

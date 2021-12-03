@@ -1,4 +1,7 @@
-package com.cocoblue.libraryapp;
+package com.cocoblue.libraryapp.service;
+
+import com.cocoblue.libraryapp.config.DBInfo;
+import com.cocoblue.libraryapp.dto.User;
 
 import javax.swing.*;
 import java.sql.*;

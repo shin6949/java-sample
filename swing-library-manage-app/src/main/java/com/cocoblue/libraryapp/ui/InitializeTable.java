@@ -1,4 +1,4 @@
-package com.cocoblue.libraryapp;
+package com.cocoblue.libraryapp.ui;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

@@ -1,5 +1,6 @@
-package com.cocoblue.libraryapp;
+package com.cocoblue.libraryapp.ui;
 
+import com.cocoblue.libraryapp.config.DBInfo;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -152,40 +153,6 @@ public class SignUp extends JFrame {
 
         this.setVisible(true);
 
-    }
-
-    private boolean register(String name, String birth, String id, String pw) {
-        try {
-            Connection conn = DriverManager.getConnection(DBInfo.DB_URL, DBInfo.DB_ID, DBInfo.DB_PW);
-            Statement stmt = conn.createStatement();
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO Users VALUES (?, true, ?, ?, ?, false, null, 0)");
-
-            pstmt.setString(1, name);
-            pstmt.setString(2, id);
-            pstmt.setString(3, pw);
-            java.sql.Date date = java.sql.Date.valueOf(birth);
-            pstmt.setDate(4, date);
-            pstmt.executeUpdate();
-
-            SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String test2 = test.format(new Date());
-            java.sql.Timestamp now_date = java.sql.Timestamp.valueOf(test2);
-
-            pstmt = conn.prepareStatement("INSERT INTO log VALUES (null, ?, ?, ?, null)");
-            pstmt.setTimestamp(2, now_date);
-            pstmt.setString(3, id);
-//            pstmt.setString(4, "Register_Success");
-            pstmt.executeUpdate();
-
-            stmt.close();
-            conn.close();
-            pstmt.close();
-
-            return true;
-        } catch (Exception e1) {
-            e1.printStackTrace();
-            return false;
-        }
     }
 
     private boolean check_id(String id) {

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection properties - Driver, URL, user, password -->
+        <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+        <property name="hibernate.connection.url">jdbc:sqlite:library.db</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">test1234</property>
+        <!-- Connection Pool Size -->
+        <property name="hibernate.connection.pool_size">2</property>
+
+        <!-- Outputs the SQL queries, should be disabled in Production -->
+        <property name="hibernate.show_sql">true</property>
+
+        <!-- Dialect is required to let Hibernate know the Database Type, MySQL, Oracle etc
+            Hibernate 4 automatically figure out Dialect from Database Connection Metadata -->
+        <property name="hibernate.dialect">org.sqlite.hibernate.dialect.SQLiteDialect</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <mapping class="com.cocoblue.libraryapp.dto.Book"/>
+        <mapping class="com.cocoblue.libraryapp.dto.User"/>
+    </session-factory>
+</hibernate-configuration>

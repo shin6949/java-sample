@@ -1,4 +1,7 @@
-package com.cocoblue.libraryapp;
+package com.cocoblue.libraryapp.config;
+
+import com.cocoblue.libraryapp.dto.Book;
+import com.cocoblue.libraryapp.dto.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -72,38 +75,6 @@ public class DBInfo {
             e1.printStackTrace();
         }
         return id;
-    }
-
-    public Book load_book(String Query, JProgressBar ProgressBar) {
-        Book book = new Book();
-
-        try {
-            process_progressbar(ProgressBar, 0);
-            make_conn();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(Query);
-            process_progressbar(ProgressBar, 50);
-
-            if (rs.next()) {
-                book.ISBN = rs.getInt("ISBN");
-                book.name = rs.getString("name");
-                book.author = rs.getString("author");
-                book.status = rs.getBoolean("isin");
-                book.location = rs.getString("location");
-                book.borrowed_id = rs.getString("borrow_id");
-                book.borrow_count = rs.getInt("borrow_count");
-            }
-
-            process_progressbar(ProgressBar, 70);
-
-            close_conn(null, rs, stmt);
-            process_progressbar(ProgressBar, 100);
-        } catch (Exception e1) {
-            process_progressbar(ProgressBar, 100);
-            System.out.println(e1 + "\n");
-            e1.printStackTrace();
-        }
-        return book;
     }
 
     public User load_User(String id, JProgressBar ProgressBar) {

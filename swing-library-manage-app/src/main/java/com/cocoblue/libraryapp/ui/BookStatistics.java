@@ -1,5 +1,6 @@
-package com.cocoblue.libraryapp;
+package com.cocoblue.libraryapp.ui;
 
+import com.cocoblue.libraryapp.config.DBInfo;
 import com.toedter.calendar.JDateChooser;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
