@@ -27,7 +27,7 @@ public class InitializeTable extends JFrame {
         table_panel.add(load_progressbar, BorderLayout.SOUTH);
         load_progressbar.setStringPainted(true);
 
-        String title[] = {"�̸�", "����", "����", "��ġ"};
+        String title[] = {"ISBN", "이름", "저자", "상태", "위치"};
         model = new DefaultTableModel(title, 0) {
             public boolean isCellEditable(int rowIndex, int mColIndex) { //���� �Ұ�
                 return false;

@@ -2,6 +2,7 @@ package com.cocoblue.libraryapp.service;
 
 import com.cocoblue.libraryapp.config.DBInfo;
 import com.cocoblue.libraryapp.config.HibernateConfig;
+import com.cocoblue.libraryapp.dao.BookDao;
 import com.cocoblue.libraryapp.dto.Book;
 import com.cocoblue.libraryapp.dto.User;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import org.hibernate.query.Query;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.lang.reflect.Member;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -22,7 +24,7 @@ import static com.cocoblue.libraryapp.config.HibernateConfig.sessionFactory;
 
 @NoArgsConstructor
 public class BookService {
-    private final SessionFactory factory = HibernateConfig.getSessionFactory();
+    private final BookDao bookDao = new BookDao();
 
     public String convertIsbn(int value) {
         return Integer.toString(value);
@@ -32,13 +34,33 @@ public class BookService {
         return status ? "대출 가능" : "대출 불가";
     }
 
-    public Book getBookByIsbnUsingHibernate(int isbn) {
-        Session session = factory.getCurrentSession();
-        session.beginTransaction();
-
-        // 한 개 불러오기
-        return (Book) session.get(Book.class, isbn);
+    public Book getBookByIsbn(String isbn) {
+        return bookDao.getBookByIsbn(Long.parseLong(isbn));
     }
+
+    public void searchBookByNameAndReflectUi(String name, DefaultTableModel model, JProgressBar progressBar) {
+        // Progress Bar 보이게 설정
+        progressBar.setVisible(true);
+        // Table 초기화
+        model.setRowCount(0);
+        // Progress Bar 20%로 세팅
+        progressBar.setValue(20);
+
+        // 검색 결과 받아오기
+        List<Book> searchResult = bookDao.getBooksByName(name);
+        progressBar.setValue(50);
+
+        for(Book book : searchResult) {
+            String []list = {String.valueOf(book.getIsbn()), book.getName(), book.getAuthor(), book.getStatus() ? "대출 가능" : "대출 불가", book.getLocation()};
+            model.addRow(list);
+        }
+        progressBar.setValue(70);
+
+        progressBar.setValue(100);
+        progressBar.setVisible(false);
+    }
+
+
 
     public Book getBookFromDb(String Query, JProgressBar ProgressBar) {
         Book book = new Book();
@@ -180,30 +202,6 @@ public class BookService {
             JOptionPane.showMessageDialog(null, "�� å�� �ݳ��� �Ұ����մϴ�.", "ERROR", JOptionPane.ERROR_MESSAGE);
             process_progressbar(progressBar, 100);
             return false;
-        }
-    }
-
-    void process_progressbar(JProgressBar progressBar, int value) {
-        switch (value) {
-            case 0:
-                if (progressBar != null) {
-                    progressBar.setVisible(true);
-                    progressBar.setValue(0);
-                }
-                break;
-
-            case 100:
-                if (progressBar != null) {
-                    progressBar.setValue(100);
-                    progressBar.setVisible(false);
-                }
-                break;
-
-            default:
-                if (progressBar != null) {
-                    progressBar.setValue(value);
-                }
-                break;
         }
     }
 }
