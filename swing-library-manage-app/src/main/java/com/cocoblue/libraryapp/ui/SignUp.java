@@ -1,30 +1,31 @@
 package com.cocoblue.libraryapp.ui;
 
-import com.cocoblue.libraryapp.config.DBInfo;
+import com.cocoblue.libraryapp.service.UserService;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 public class SignUp extends JFrame {
+    // UI Component
+    private final JTextField inputId;
+    private final JPasswordField inputPwd;
+    private final JTextField inputName;
+    private boolean idChecked = false;
+    private final JDateChooser dateChooser;
+    private final JPasswordField inputPwdRe;
 
-    private JPanel signupPanel;
-    private JTextField input_id;
-    private JPasswordField input_pwd;
-    private JTextField input_name;
-    private boolean id_checked = false;
-    private JDateChooser dateChooser;
-    private JPasswordField input_pwd_re;
+    // Service
+    private final UserService userService = new UserService();
 
     public SignUp() {
         setTitle("\uD68C\uC6D0\uAC00\uC785");
         setBounds(100, 100, 450, 300);
-        signupPanel = new JPanel();
+        JPanel signupPanel = new JPanel();
         signupPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(signupPanel);
         signupPanel.setLayout(null);
@@ -37,14 +38,14 @@ public class SignUp extends JFrame {
         lblNewLabel_1.setBounds(28, 154, 77, 39);
         signupPanel.add(lblNewLabel_1);
 
-        input_id = new JTextField();
-        input_id.setBounds(134, 117, 173, 21);
-        signupPanel.add(input_id);
-        input_id.setColumns(10);
+        inputId = new JTextField();
+        inputId.setBounds(134, 117, 173, 21);
+        signupPanel.add(inputId);
+        inputId.setColumns(10);
 
-        input_pwd = new JPasswordField();
-        input_pwd.setBounds(134, 166, 173, 21);
-        signupPanel.add(input_pwd);
+        inputPwd = new JPasswordField();
+        inputPwd.setBounds(134, 166, 173, 21);
+        signupPanel.add(inputPwd);
 
         JLabel label = new JLabel("\uC0DD\uB144\uC6D4\uC77C");
         label.setBounds(28, 65, 57, 15);
@@ -54,57 +55,56 @@ public class SignUp extends JFrame {
         lblNewLabel_2.setBounds(28, 13, 57, 15);
         signupPanel.add(lblNewLabel_2);
 
-        input_name = new JTextField();
-        input_name.setBounds(134, 10, 173, 21);
-        signupPanel.add(input_name);
-        input_name.setColumns(10);
+        inputName = new JTextField();
+        inputName.setBounds(134, 10, 173, 21);
+        signupPanel.add(inputName);
+        inputName.setColumns(10);
 
         JButton btn_register = new JButton("\uD68C\uC6D0\uAC00\uC785");
         btn_register.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
-                int name_len = input_name.getText().length();
+                int name_len = inputName.getText().length();
                 boolean name_checked, birth_checked, pwd_checked = false;
 
                 if (name_len <= 1 || name_len > 11) {
-                    JOptionPane.showMessageDialog(null, "�̸��� �Է����ּ���. 2 ~ 10���ڷ� �����Ǿ���մϴ�.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "이름을 입력해주세요. 2 ~ 10글자로 구성되어야합니다.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     name_checked = false;
                 } else {
                     name_checked = true;
                 }
 
                 if (dateChooser.getDate() == null) {
-                    JOptionPane.showMessageDialog(null, "��������� �Է��ϼ���.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "생년월일을 입력하세요.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     birth_checked = false;
                 } else {
                     birth_checked = true;
                 }
 
-                if (!id_checked) {
-                    JOptionPane.showMessageDialog(null, "ID �ߺ�Ȯ���� ���ּ���.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                if (!idChecked) {
+                    JOptionPane.showMessageDialog(null, "ID 중복확인을 해주세요.", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
 
-                if (input_pwd.getPassword().length < 4 || input_pwd.getPassword().length >= 20) {
-                    JOptionPane.showMessageDialog(null, "��й�ȣ�� 4 ~ 20���ڷ� �����Ǿ���մϴ�.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                if (inputPwd.getPassword().length < 4 || inputPwd.getPassword().length >= 20) {
+                    JOptionPane.showMessageDialog(null, "비밀번호는 4 ~ 20글자로 구성되어야합니다.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     pwd_checked = false;
-                } else if (input_pwd.getText().equals(input_pwd_re.getText())) {
+                } else if (inputPwd.getText().equals(inputPwdRe.getText())) {
                     pwd_checked = true;
                 } else {
-                    JOptionPane.showMessageDialog(null, "��й�ȣ�� 2ĭ ��� ��Ȯ�ϰ� �Է��ϼ���.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "비밀번호를 2칸 모두 정확하게 입력하세요.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     pwd_checked = false;
                 }
 
-                if (name_checked && birth_checked && pwd_checked && id_checked) {
+                if (name_checked && birth_checked && pwd_checked && idChecked) {
+                    LocalDate localDate = dateChooser.getDate().toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate();
 
-                    SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd");
-                    String test2 = test.format(dateChooser.getDate());
-
-                    System.out.printf("%s %s %s\n", input_name.getText(), test2, input_id.getText());
-                    if (register(input_name.getText(), test2, input_id.getText(), input_pwd.getText())) {
-                        JOptionPane.showMessageDialog(null, "ȸ�� ���� �Ϸ�", "MESSAGE", JOptionPane.INFORMATION_MESSAGE);
+                    if (userService.register(inputName.getText(), localDate, inputId.getText(), inputPwd.getPassword())) {
+                        JOptionPane.showMessageDialog(null, "회원 가입 완료", "MESSAGE", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
                     } else {
-                        JOptionPane.showMessageDialog(null, "ȸ�� ���� ����", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "회원 가입 실패", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -116,22 +116,21 @@ public class SignUp extends JFrame {
         JButton btn_check_id = new JButton("\uC911\uBCF5\uD655\uC778");
         btn_check_id.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println(input_id.getText());
-                if (input_id.getText().length() >= 4 && input_id.getText().length() <= 10) {
-                    if (check_id(input_id.getText())) {
-                        int result = JOptionPane.showConfirmDialog(null, "ID ����� �����մϴ�. ����Ͻðڽ��ϱ�?", "�˸�", JOptionPane.YES_NO_OPTION);
+                System.out.println(inputId.getText());
+                if (inputId.getText().length() >= 4 && inputId.getText().length() <= 10) {
+                    if (check_id(inputId.getText())) {
+                        int result = JOptionPane.showConfirmDialog(null, "ID 사용이 가능합니다. 사용하시겠습니까?", "알림", JOptionPane.YES_NO_OPTION);
                         if (result == JOptionPane.CLOSED_OPTION) {
                         } else if (result == JOptionPane.YES_OPTION) {
-                            input_id.setEnabled(false);
-                            id_checked = true;
-                        } else {
+                            inputId.setEnabled(false);
+                            idChecked = true;
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "�ߺ��� ID�� �ֽ��ϴ�.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "중복된 ID가 있습니다.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "ID ��Ģ�� ���� �ʽ��ϴ�. ID�� 4 ~ 10 ���ڷ� �����Ǿ�� �մϴ�.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "ID 규칙에 맞지 않습니다. ID는 4 ~ 10 글자로 구성되어야 합니다.", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -147,40 +146,15 @@ public class SignUp extends JFrame {
         dateChooser.setBounds(134, 65, 173, 21);
         signupPanel.add(dateChooser);
 
-        input_pwd_re = new JPasswordField();
-        input_pwd_re.setBounds(134, 218, 173, 21);
-        signupPanel.add(input_pwd_re);
+        inputPwdRe = new JPasswordField();
+        inputPwdRe.setBounds(134, 218, 173, 21);
+        signupPanel.add(inputPwdRe);
 
         this.setVisible(true);
 
     }
 
     private boolean check_id(String id) {
-        try {
-            Connection conn = DriverManager.getConnection(DBInfo.DB_URL, DBInfo.DB_ID, DBInfo.DB_PW);
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Users Where id LIKE '" + id + "'");
-            int count = 0;
-
-            if (rs.next()) {
-                count++;
-            }
-
-            if (count == 0) {
-                rs.close();
-                stmt.close();
-                conn.close();
-                return true;
-            } else {
-                rs.close();
-                stmt.close();
-                conn.close();
-                return false;
-            }
-
-        } catch (Exception e1) {
-            e1.printStackTrace();
-            return false;
-        }
+        return userService.getUserByUsername(id) == null;
     }
 }

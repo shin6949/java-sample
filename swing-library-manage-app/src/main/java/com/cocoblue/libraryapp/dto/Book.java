@@ -1,9 +1,6 @@
 package com.cocoblue.libraryapp.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +8,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Builder
 @Entity
 @Table(name="book",
         uniqueConstraints={@UniqueConstraint(columnNames={"isbn"})})
@@ -26,9 +24,10 @@ public class Book {
     private Boolean status;
     @Column(name = "location", nullable = false)
     private String location;
-    @JoinColumn(name = "borrowed_user")
-    @OneToOne
-    private User borrowedUser;
     @Column(name = "borrow_count", nullable = false)
     private int borrowCount;
+
+    public String getStatusToString() {
+        return status ? "대출 가능" : "대출 불가";
+    }
 }

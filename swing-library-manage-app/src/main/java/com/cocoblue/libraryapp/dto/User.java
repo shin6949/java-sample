@@ -31,4 +31,7 @@ public class User {
     private LocalDate birthday;
     @Column(name = "is_admin", nullable = false)
     private Boolean isAdmin;
+    @JoinColumn(name = "borrowed_book")
+    @OneToOne
+    private Book borrowedBook;
 }

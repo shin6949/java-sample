@@ -120,8 +120,8 @@ public class BookStatistics extends JFrame {
         contentPane.add(toolbar_panel);
         toolbar_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-        JButton btn_graph = new JButton("\uADF8\uB798\uD504 \uD1B5\uACC4");
-        btn_graph.addActionListener(new ActionListener() {
+        JButton btnGraph = new JButton("\uADF8\uB798\uD504 \uD1B5\uACC4");
+        btnGraph.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 DefaultCategoryDataset barDataset = new DefaultCategoryDataset();
 
@@ -153,8 +153,8 @@ public class BookStatistics extends JFrame {
                 p.getRangeAxis().setTickLabelFont(new Font("����", Font.BOLD, 13));
             }
         });
-        btn_graph.setPreferredSize(new Dimension(130, 35));
-        toolbar_panel.add(btn_graph);
+        btnGraph.setPreferredSize(new Dimension(130, 35));
+        toolbar_panel.add(btnGraph);
 
         JButton btn_detail = new JButton("\uC0C1\uC138 \uC815\uBCF4");
         btn_detail.setPreferredSize(new Dimension(100, 35));

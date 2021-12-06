@@ -1,8 +1,8 @@
 package com.cocoblue.libraryapp.ui;
 
 import com.cocoblue.libraryapp.dto.Book;
-import com.cocoblue.libraryapp.dto.User;
 import com.cocoblue.libraryapp.service.BookService;
+import com.cocoblue.libraryapp.service.UiService;
 import com.cocoblue.libraryapp.service.UserService;
 
 import javax.swing.*;
@@ -13,22 +13,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import static com.cocoblue.libraryapp.LibraryApp.CURRENT_USER;
+
 public class Main extends JFrame implements Runnable {
     // UI Component
     private static JPanel contentPane;
-    private JTextField inputSearchBooks, inputId;
-    private final Panel loginSessionPanel = new Panel();
-    private JPasswordField inputPwd;
+    private final JTextField inputSearchBooks;
+    private final JTextField inputId;
+    private final JPasswordField inputPwd;
     private static JProgressBar loadProgressbar;
-    static DefaultTableModel model;
-    JButton btnBorrow, btnReturn;
+    private final DefaultTableModel model;
+    private final JButton btnBorrow, btnReturn;
 
     // Service
-    private BookService bookService = new BookService();
-    private UserService userService = new UserService();
-
-    private static DB_info db = new DB_info();
-    private static login_manager login = new login_manager();
+    private final BookService bookService = new BookService();
+    private final UserService userService = new UserService();
+    private final UiService uiService = new UiService();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -75,7 +75,13 @@ public class Main extends JFrame implements Runnable {
         btnSearch.setPreferredSize(new Dimension(98, 20));
         btnSearch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                bookService.searchBookByNameAndReflectUi(inputSearchBooks.getText(), model, loadProgressbar);
+                uiService.processProgressbar(loadProgressbar, 0);
+
+                final List<Book> searchResult = bookService.searchBookByName(inputSearchBooks.getText());
+                uiService.processProgressbar(loadProgressbar, 50);
+
+                bookService.reflectDataOnModel(model, searchResult);
+                uiService.processProgressbar(loadProgressbar, 100);
             }
         });
 
@@ -107,12 +113,19 @@ public class Main extends JFrame implements Runnable {
         btnBorrow = new JButton("\uB300\uCD9C");
         btnBorrow.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
+                // Header를 클릭했는지 확인
                 if(!String.valueOf(model.getValueAt(table.getSelectedRow(), 0)).equals("ISBN")) {
-                    Book book = bookService.getBookByIsbn((String) model.getValueAt(table.getSelectedRow(), 0));
+                    final String selectedBookIsbn = (String) model.getValueAt(table.getSelectedRow(), 0);
+                    final Book book = bookService.getBookByIsbn(selectedBookIsbn);
 
-                    db.borrow(loadProgressbar, book, login_manager.logined_id);
-                    refresh(model, loadProgressbar);
-                    check_borrow_status(btnBorrow, btnReturn);
+                    if(bookService.borrowBook(book, CURRENT_USER)) {
+                        refreshTable(model);
+                        checkBorrowStatus(btnBorrow, btnReturn);
+
+                        JOptionPane.showMessageDialog(null,  "대출이 완료되었습니다.", "MESSAGE", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null,  "이 책은 대출이 불가능합니다.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
@@ -122,21 +135,22 @@ public class Main extends JFrame implements Runnable {
         btnReturn = new JButton("\uCC45 \uBC18\uB0A9");
         btnReturn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                db.return_books(loadProgressbar, login_manager.logined_id);
-                refresh(model, loadProgressbar);
-                check_borrow_status(btnBorrow, btnReturn);
+                bookService.returnBook();
+                refreshTable(model);
+                checkBorrowStatus(btnBorrow, btnReturn);
             }
         });
 
-        check_borrow_status(btnBorrow, btnReturn);
+        checkBorrowStatus(btnBorrow, btnReturn);
 
         toolBoxPanel.add(btnReturn);
 
-        JButton btn_detail = new JButton("\uC0C1\uC138 \uC815\uBCF4");
-        toolBoxPanel.add(btn_detail);
-        btn_detail.addActionListener(new ActionListener() {
+        // 자세한 정보 보기 버튼
+        JButton btnDetail = new JButton("\uC0C1\uC138 \uC815\uBCF4");
+        toolBoxPanel.add(btnDetail);
+        btnDetail.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                Book book = db.load_book("SELECT * FROM Books WHERE name = '" + String.valueOf(model.getValueAt(table.getSelectedRow(), 0)) + "'", loadProgressbar);
+                final Book book = bookService.getBookByIsbn(String.valueOf(model.getValueAt(table.getSelectedRow(), 0)));
                 new Detail(book);
             }
         });
@@ -147,7 +161,7 @@ public class Main extends JFrame implements Runnable {
         JButton btn_admin = new JButton("\uAD00\uB9AC \uBAA8\uB4DC");
         btn_admin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                new adminMode();
+                new AdminMode();
             }
         });
         toolBoxPanel.add(btn_admin);
@@ -155,7 +169,7 @@ public class Main extends JFrame implements Runnable {
 
         btn_refresh.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                refresh(model, loadProgressbar);
+                refreshTable(model);
                 inputSearchBooks.setText("");
             }
         });
@@ -169,6 +183,7 @@ public class Main extends JFrame implements Runnable {
         tablePanel.add(loadProgressbar, BorderLayout.SOUTH);
         loadProgressbar.setStringPainted(true);
 
+        Panel loginSessionPanel = new Panel();
         loginSessionPanel.setBounds(10, 239, 599, 35);
         contentPane.add(loginSessionPanel);
         loginSessionPanel.setLayout(null);
@@ -214,35 +229,40 @@ public class Main extends JFrame implements Runnable {
         login_panel.add(btn_login);
         btn_login.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                //login
-                login.request_login(inputId.getText(), inputPwd.getText(), loadProgressbar);
-                if(login_manager.logined == true ) {
+                // Login
+                uiService.processProgressbar(loadProgressbar, 0);
+                userService.login(inputId.getText(), inputPwd.getPassword());
+                uiService.processProgressbar(loadProgressbar, 70);
+
+                if(CURRENT_USER != null) {
                     login_panel.setVisible(false);
                     logined_panel.setVisible(true);
                     inputId.setText("");
                     inputPwd.setText("");
-                    logined_status.setText(login_manager.logined_name + "님 안녕하세요.");
-                    check_borrow_status(btnBorrow, btnReturn);
+                    logined_status.setText(CURRENT_USER.getName() + "님 안녕하세요.");
+                    checkBorrowStatus(btnBorrow, btnReturn);
 
-                    if(login_manager.logined_is_admin == true) {
+                    if(CURRENT_USER.getIsAdmin()) {
                         btn_admin.setVisible(true);
                     }
                 }
+                uiService.processProgressbar(loadProgressbar, 100);
             }
         });
         btn_login.setFont(new Font("굴림", Font.PLAIN, 12));
 
+        // 로그아웃
         JButton btn_logout = new JButton("\uB85C\uADF8\uC544\uC6C3");
         btn_logout.setPreferredSize(new Dimension(98, 20));
         btn_logout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                login.request_logout(loadProgressbar);
-                if(login_manager.logined == false)  {
+                userService.loginOut();
+                if(CURRENT_USER == null)  {
                     login_panel.setVisible(true);
                     logined_panel.setVisible(false);
                     logined_status.setText("");
                     btn_admin.setVisible(false);
-                    check_borrow_status(btnBorrow, btnReturn);
+                    checkBorrowStatus(btnBorrow, btnReturn);
                 }
             }
         });
@@ -253,30 +273,37 @@ public class Main extends JFrame implements Runnable {
         login_panel.add(btn_register);
         btn_register.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new Signup();
+                new SignUp();
             }
         });
     }
 
     @Override
-    public void run() {	db.public_ResultSet_SQL_Query(model, "select * from Books;", loadProgressbar); }
+    public void run() {
+        uiService.processProgressbar(loadProgressbar, 0);
+        final List<Book> allBooks = bookService.getAllBook();
+        uiService.processProgressbar(loadProgressbar, 50);
+        bookService.reflectDataOnModel(model, allBooks);
+        uiService.processProgressbar(loadProgressbar, 100);
+    }
 
-    private void check_borrow_status(JButton btn_borrow, JButton btn_return) {
-        if(login_manager.logined == false) {
-            btn_borrow.setEnabled(false);
-            btn_return.setEnabled(false);
+    private void checkBorrowStatus(JButton btnBorrow, JButton btnReturn) {
+        if(CURRENT_USER == null) {
+            btnBorrow.setEnabled(false);
+            btnReturn.setEnabled(false);
         }
-        else if(login_manager.logined_borrow_status == true) {
-            btn_borrow.setEnabled(true);
-            btn_return.setEnabled(false);
+        else if(CURRENT_USER.getBorrowedBook() == null) {
+            btnBorrow.setEnabled(true);
+            btnReturn.setEnabled(false);
         } else {
-            btn_borrow.setEnabled(false);
-            btn_return.setEnabled(true);
+            btnBorrow.setEnabled(false);
+            btnReturn.setEnabled(true);
         }
     }
 
-    private void refresh(DefaultTableModel model, JProgressBar progressBar) {
+    private void refreshTable(DefaultTableModel model) {
         model.setRowCount(0);
-        db.public_ResultSet_SQL_Query(model, "select * from Books;", loadProgressbar);
+        List<Book> allBooks = bookService.getAllBook();
+        bookService.reflectDataOnModel(model, allBooks);
     }
 }

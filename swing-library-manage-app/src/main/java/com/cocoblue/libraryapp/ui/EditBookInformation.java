@@ -1,5 +1,7 @@
 package com.cocoblue.libraryapp.ui;
 
+import com.cocoblue.libraryapp.dto.Book;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;

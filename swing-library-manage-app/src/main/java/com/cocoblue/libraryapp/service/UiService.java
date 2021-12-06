@@ -26,16 +26,4 @@ public class UiService {
                 break;
         }
     }
-
-    public String convert_status(Boolean status) {
-        String string_status = null;
-
-        if (status) {
-            string_status = "���� ����";
-        } else {
-            string_status = "���� �Ұ�";
-        }
-
-        return string_status;
-    }
 }
